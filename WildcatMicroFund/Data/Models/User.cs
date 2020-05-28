@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Data.Models
+namespace WildcatMicroFund.Data.Models
 {
-    class User
+    public class User
     {
         public int ID { get; set; }
         public UserRole UserRoleID {get; set;}

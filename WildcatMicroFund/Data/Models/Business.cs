@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace Data.Models
+namespace WildcatMicroFund.Data.Models
 {
-    internal class Business
+    public class Business
     {
         
-        int ID { get; set; }
-        string BusinessName { get; set; }
+        public int ID { get; set; }
+        public string BusinessName { get; set; }
 
 
         public List<UserBusiness> UserBusinesses { get;  set; }

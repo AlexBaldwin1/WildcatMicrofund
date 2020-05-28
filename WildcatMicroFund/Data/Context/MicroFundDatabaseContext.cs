@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
-using Data.Models;
+using WildcatMicroFund.Data.Models;
 
-namespace Data.Context
+namespace WildcatMicroFund.Data.Context
 {
     class MicroFundDatabaseContext: DbContext
     {

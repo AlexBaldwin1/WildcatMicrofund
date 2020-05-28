@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Data.Models
+namespace WildcatMicroFund.Data.Models
 {
     public class Survey
     {

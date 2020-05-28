@@ -1,6 +1,6 @@
-﻿namespace Data.Models
+﻿namespace WildcatMicroFund.Data.Models
 {
-    internal class UserRole
+    public class UserRole
     {
         public int ID { get; set; }
         public string RoleDescription { get; set; }
