@@ -6,9 +6,9 @@ using WildcatMicroFund.Data.Models;
 
 namespace WildcatMicroFund.Data.Context
 {
-    class MicroFundDatabaseContext: DbContext
+    class WildcatMicroFundDatabaseContext: DbContext
     {
-        public MicroFundDatabaseContext(DbContextOptions<MicroFundDatabaseContext> options) : base(options)
+        public WildcatMicroFundDatabaseContext(DbContextOptions<WildcatMicroFundDatabaseContext> options) : base(options)
         {
         }
 
