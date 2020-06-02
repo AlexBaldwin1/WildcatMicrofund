@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WildcatMicroFund.Data.Context;
 
 namespace WildcatMicroFund.Migrations
 {
     [DbContext(typeof(WildcatMicroFundDatabaseContext))]
-    partial class WildcatMicroFundDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200601212758_UpdateReqEmail")]
+    partial class UpdateReqEmail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

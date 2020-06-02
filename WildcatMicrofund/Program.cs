@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using WildcatMicroFund.Data.Context;
+using WildcatMicroFund.Data;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,7 +17,7 @@ namespace WildcatMicroFund
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            //CreateHostBuilder(args).Build().Run();
 
             var host = CreateHostBuilder(args).Build();
             CreateDbIfNotExists(host);
@@ -31,7 +32,8 @@ namespace WildcatMicroFund
                 try
                 {
                     var context = services.GetRequiredService<WildcatMicroFundDatabaseContext>();
-                    context.Database.EnsureCreated();
+                    DbInitializer.Initialize(context);
+                    //context.Database.EnsureCreated();
 
                 }
                 catch (Exception ex)
