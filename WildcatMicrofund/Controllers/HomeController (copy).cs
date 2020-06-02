@@ -10,11 +10,11 @@ using WildcatMicroFund.Models;
 
 namespace WildcatMicroFund.Controllers
 {
-    public class HomeController : Controller
+    public class HomeControllerQ : Controller
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeControllerQ(ILogger<HomeController> logger)
         {
             _logger = logger;
         }

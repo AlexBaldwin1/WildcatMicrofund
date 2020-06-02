@@ -6,7 +6,7 @@ using WildcatMicroFund.Data.Models;
 
 namespace WildcatMicroFund.Data.Context
 {
-    class WildcatMicroFundDatabaseContext: DbContext
+    public class WildcatMicroFundDatabaseContext: DbContext
     {
         public WildcatMicroFundDatabaseContext(DbContextOptions<WildcatMicroFundDatabaseContext> options) : base(options)
         {
