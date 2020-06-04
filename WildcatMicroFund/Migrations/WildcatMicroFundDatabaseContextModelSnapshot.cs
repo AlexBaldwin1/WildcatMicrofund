@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WildcatMicroFund.Data.Context;
 
-namespace WildcatMicroFund.Migrations
+namespace WildcatMicrofund.Migrations
 {
     [DbContext(typeof(WildcatMicroFundDatabaseContext))]
     partial class WildcatMicroFundDatabaseContextModelSnapshot : ModelSnapshot
@@ -73,6 +73,22 @@ namespace WildcatMicroFund.Migrations
                     b.ToTable("Businesses");
                 });
 
+            modelBuilder.Entity("WildcatMicroFund.Data.Models.Ethnicity", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("EthnicityDescription")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Ethnicities");
+                });
+
             modelBuilder.Entity("WildcatMicroFund.Data.Models.Survey", b =>
                 {
                     b.Property<int>("ID")
@@ -117,20 +133,21 @@ namespace WildcatMicroFund.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(400)");
+
+                    b.Property<int>("EthnicityID")
+                        .HasColumnType("int");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Race")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("Sex")
                         .HasColumnType("nvarchar(max)");
@@ -145,6 +162,8 @@ namespace WildcatMicroFund.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("EthnicityID");
 
                     b.ToTable("Users");
                 });
@@ -203,6 +222,15 @@ namespace WildcatMicroFund.Migrations
                     b.HasOne("WildcatMicroFund.Data.Models.SurveyCode", "SurveyCode")
                         .WithMany("Surveys")
                         .HasForeignKey("SurveyCodeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WildcatMicroFund.Data.Models.User", b =>
+                {
+                    b.HasOne("WildcatMicroFund.Data.Models.Ethnicity", "Ethnicity")
+                        .WithMany("Users")
+                        .HasForeignKey("EthnicityID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

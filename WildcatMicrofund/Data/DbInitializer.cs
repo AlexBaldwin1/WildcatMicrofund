@@ -32,12 +32,30 @@ namespace WildcatMicroFund.Data
                 context.Businesses.Add(b);
             }
             context.SaveChanges();
-             
+
+
+            //Ethicity
+            var ethicity = new Ethnicity[]
+            {
+                new Ethnicity{EthnicityDescription="African American/Black"},
+                new Ethnicity{EthnicityDescription="Asian"},
+                new Ethnicity{EthnicityDescription="Pacific Islander"},
+                new Ethnicity{EthnicityDescription="White"},
+                new Ethnicity{EthnicityDescription="Hispanic/Latinx"},
+                new Ethnicity{EthnicityDescription="Alaskan Native"},
+                new Ethnicity{EthnicityDescription="Prefer not to share"}
+
+            };
+            foreach (Ethnicity e in ethicity)
+            {
+                context.Ethnicities.Add(e);
+            }
+            context.SaveChanges();
 
             // Users
             var users = new User[]
 {
-                new User{Email="billy@gmail.com",FirstName="William",LastName="Thorton",PhoneNumber="555-555-5123",Sex="m",Race="Caucasian",StreetAddress="1234 fake street",City="Shelbyville",State="Illinois",Zip="00123"}
+                new User{Email="billy@gmail.com",FirstName="William",LastName="Thorton",PhoneNumber="555-555-5123",Sex="m",EthnicityID=1,StreetAddress="1234 fake street",City="Shelbyville",State="Illinois",Zip="00123"}
 };
 
             foreach (User u in users)
@@ -78,6 +96,8 @@ namespace WildcatMicroFund.Data
                 context.UserRoles.Add(ur);
             }
             context.SaveChanges();
+
+            
 
 
 
