@@ -55,7 +55,7 @@ namespace WildcatMicroFund.Data
             // Users
             var users = new User[]
 {
-                new User{Email="billy@gmail.com",FirstName="William",LastName="Thorton",PhoneNumber="555-555-5123",Sex="m",EthnicityID=1,StreetAddress="1234 fake street",City="Shelbyville",State="Illinois",Zip="00123"}
+                new User{Email="billy@gmail.com",FirstName="William",LastName="Thorton",PhoneNumber="555-555-5123",EthnicityID=1,StreetAddress="1234 fake street",City="Shelbyville",State="Illinois",Zip="00123"}
 };
 
             foreach (User u in users)

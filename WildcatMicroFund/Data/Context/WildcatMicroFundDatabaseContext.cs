@@ -110,6 +110,13 @@ namespace WildcatMicroFund.Data.Context
                 .HasOne(u => u.UserRoleID)
                 .WithOne(ur => ur.User)
                 .HasForeignKey<UserRole>(ur => ur.ID);
+            //Gender
+            //User Gender relationship
+
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Gender)
+                .WithMany(g => g.Users)
+                .HasForeignKey(u => u.Gender);
 
             //User
             //User Ethnicity relationship
