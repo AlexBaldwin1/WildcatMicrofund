@@ -19,6 +19,7 @@ namespace WildcatMicroFund.Data.Context
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }    
         public DbSet<UserBusiness> UserBusinesses { get; set; }
+        public DbSet<Ethnicity> Ethnicities { get; set; }
         
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -69,20 +70,14 @@ namespace WildcatMicroFund.Data.Context
             modelBuilder.Entity<User>()
                 .HasOne(u => u.UserRoleID)
                 .WithOne(ur => ur.User)
-                .HasForeignKey<UserRole>(u => u.ID);
+                .HasForeignKey<UserRole>(ur => ur.ID);
 
-            // User Roles
-            // UserRoles User relationship
+            //User
+            //User Ethnicity relationship
             modelBuilder.Entity<User>()
-                .HasOne(u => u.Gender)
-                .WithMany(ur => ur.ID)
-                .HasForeignKey<Gender>(u => u.ID);
-
-            modelBuilder.Entity<Application>()
-    .HasOne(a => a.User)
-    .WithMany(u => u.Applications)
-    .HasForeignKey(u => u.UserID);
-
+                .HasOne(u => u.Ethnicity)
+                .WithMany(e => e.Users)
+                .HasForeignKey(u => u.EthnicityID);
 
         }
     }

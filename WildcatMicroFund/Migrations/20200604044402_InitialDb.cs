@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace WildcatMicroFund.Migrations
+namespace WildcatMicrofund.Migrations
 {
     public partial class InitialDb : Migration
     {
@@ -18,6 +18,19 @@ namespace WildcatMicroFund.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Businesses", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Ethnicities",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EthnicityDescription = table.Column<string>(type: "varchar(100)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ethnicities", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -39,12 +52,12 @@ namespace WildcatMicroFund.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(nullable: true),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(type: "varchar(400)", nullable: false),
+                    FirstName = table.Column<string>(type: "varchar(100)", nullable: false),
+                    LastName = table.Column<string>(type: "varchar(100)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "varchar(100)", nullable: true),
                     Sex = table.Column<string>(nullable: true),
-                    Race = table.Column<string>(nullable: true),
+                    EthnicityID = table.Column<int>(nullable: false),
                     StreetAddress = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: true),
                     State = table.Column<string>(nullable: true),
@@ -53,6 +66,12 @@ namespace WildcatMicroFund.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Users_Ethnicities_EthnicityID",
+                        column: x => x.EthnicityID,
+                        principalTable: "Ethnicities",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -177,6 +196,11 @@ namespace WildcatMicroFund.Migrations
                 name: "IX_UserBusinesses_UserID",
                 table: "UserBusinesses",
                 column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_EthnicityID",
+                table: "Users",
+                column: "EthnicityID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -201,6 +225,9 @@ namespace WildcatMicroFund.Migrations
 
             migrationBuilder.DropTable(
                 name: "SurveyCodes");
+
+            migrationBuilder.DropTable(
+                name: "Ethnicities");
         }
     }
 }
