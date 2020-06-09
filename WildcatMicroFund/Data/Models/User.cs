@@ -21,7 +21,9 @@ namespace WildcatMicroFund.Data.Models
         public string LastName { get; set; }
         [Column(TypeName = "varchar(100)")]
         public string PhoneNumber { get; set; }
-        public string Sex { get; set; }
+
+        public string GenderID { get; set; }
+        public Gender Gender { get; set; }
 
 
         public int EthnicityID { get; set; }
