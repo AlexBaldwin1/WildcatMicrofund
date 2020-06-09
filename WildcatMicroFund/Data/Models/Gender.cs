@@ -11,7 +11,7 @@ namespace WildcatMicroFund.Data.Models
         [Required]
         [Column(TypeName = "varchar(100)")]
         public string Description { get; set; }
-        public User User { get; set; }
+        public List<User>? Users { get; set; }
 
         public Gender()
         {
