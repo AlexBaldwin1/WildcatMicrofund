@@ -68,9 +68,9 @@ namespace WildcatMicroFund.Data.Context
             // User Roles
             // UserRoles User relationship
             modelBuilder.Entity<User>()
-                .HasOne(u => u.Gender)
-                .WithMany(ur => ur.Users)
-                .HasForeignKey(ur => ur.GenderID);
+                .HasOne(u => u.UserRoleID)
+                .WithOne(ur => ur.User)
+                .HasForeignKey<UserRole>(ur => ur.ID);
 
             //User
             //User Ethnicity relationship
