@@ -20,6 +20,12 @@ namespace WildcatMicroFund.Data.Context
         public DbSet<UserRole> UserRoles { get; set; }    
         public DbSet<UserBusiness> UserBusinesses { get; set; }
         public DbSet<Ethnicity> Ethnicities { get; set; }
+        public DbSet<DateResponse> DateResponses { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<QuestionType> QuestionTypes { get; set; }
+        public DbSet<Response> Responses { get; set; }
+        public DbSet<TextResponse> TextResponses { get; set; }
+        
         
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,7 +46,29 @@ namespace WildcatMicroFund.Data.Context
                 .HasOne(a => a.Survey)
                 .WithMany(s => s.Applications)
                 .HasForeignKey(a => a.SurveyID);
-                
+
+            // Date Response
+            modelBuilder.Entity<DateResponse>()
+                .HasKey(dr => new { dr.QuestionID, dr.ResponseID });
+            modelBuilder.Entity<DateResponse>()
+                .HasOne(dr => dr.Response)
+                .WithOne(r => r.DateResponse)
+                .HasForeignKey<Response>(r=> r.DateResponseID);
+
+
+            // Question
+            // Question Survey relationship
+            modelBuilder.Entity<Question>()
+               .HasOne(q => q.SurveyCode)
+               .WithMany(sc => sc.Questions)
+               .HasForeignKey(s => s.SurveyCodeID);
+
+            // QuestionType
+            // Question type Question relationship
+            modelBuilder.Entity<Question>()
+               .HasOne(q => q.QuestionType)
+               .WithMany(qt => qt.Questions)
+               .HasForeignKey(q => q.QuestionTypeID);
 
 
             // Survey
@@ -49,6 +77,16 @@ namespace WildcatMicroFund.Data.Context
                 .HasOne(s => s.SurveyCode)
                 .WithMany(sc => sc.Surveys)                
                 .HasForeignKey(s => s.SurveyCodeID);
+
+
+            // Text Response
+            modelBuilder.Entity<TextResponse>()
+                .HasKey(tr => new { tr.QuestionID, tr.ResponseID });
+            modelBuilder.Entity<TextResponse>()
+                .HasOne(tr => tr.Response)
+                .WithOne(r => r.TextResponse)
+                .HasForeignKey<Response>(r => r.TextResponseID);
+
 
             // UserBusiness 
             // Composite key
@@ -64,6 +102,7 @@ namespace WildcatMicroFund.Data.Context
                 .HasOne(ub => ub.Business)
                 .WithMany(b => b.UserBusinesses)
                 .HasForeignKey(ub => ub.BusinessID);
+
 
             // User Roles
             // UserRoles User relationship
