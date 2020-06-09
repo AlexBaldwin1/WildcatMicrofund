@@ -16,6 +16,7 @@ namespace WildcatMicroFund.Data.Models
         public QuestionType QuestionType { get; set; }
         public int QuestionTypeID{get; set;}
 
-        public DateResponse DateResponse { get; set; }
+        public List<DateResponse> DateResponses { get; set; }
+        public List<TextResponse> TextResponses { get; set; }
     }
 }

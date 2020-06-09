@@ -34,6 +34,33 @@ namespace WildcatMicrofund.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Gender",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "varchar(100)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Gender", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QuestionTypes",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    QuestionTypeName = table.Column<string>(type: "varchar(500)", nullable: false),
+                    QuestionTypeHasChoices = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuestionTypes", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SurveyCodes",
                 columns: table => new
                 {
@@ -56,7 +83,7 @@ namespace WildcatMicrofund.Migrations
                     FirstName = table.Column<string>(type: "varchar(100)", nullable: false),
                     LastName = table.Column<string>(type: "varchar(100)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "varchar(100)", nullable: true),
-                    Sex = table.Column<string>(nullable: true),
+                    GenderID = table.Column<int>(nullable: false),
                     EthnicityID = table.Column<int>(nullable: false),
                     StreetAddress = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: true),
@@ -70,6 +97,40 @@ namespace WildcatMicrofund.Migrations
                         name: "FK_Users_Ethnicities_EthnicityID",
                         column: x => x.EthnicityID,
                         principalTable: "Ethnicities",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Users_Gender_GenderID",
+                        column: x => x.GenderID,
+                        principalTable: "Gender",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Questions",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SurveyCodeID = table.Column<int>(nullable: false),
+                    QuestionText = table.Column<string>(type: "varchar(500)", nullable: true),
+                    QuestionNumber = table.Column<int>(nullable: false),
+                    QuestionTypeID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Questions", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Questions_QuestionTypes_QuestionTypeID",
+                        column: x => x.QuestionTypeID,
+                        principalTable: "QuestionTypes",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Questions_SurveyCodes_SurveyCodeID",
+                        column: x => x.SurveyCodeID,
+                        principalTable: "SurveyCodes",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -172,6 +233,72 @@ namespace WildcatMicrofund.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Responses",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ResponseDate = table.Column<DateTime>(nullable: false),
+                    SurveyID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Responses", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Responses_Surveys_SurveyID",
+                        column: x => x.SurveyID,
+                        principalTable: "Surveys",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DateResponses",
+                columns: table => new
+                {
+                    ResponseID = table.Column<int>(nullable: false),
+                    QuestionID = table.Column<int>(nullable: false),
+                    ResponseDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DateResponses", x => new { x.QuestionID, x.ResponseID });
+                    table.ForeignKey(
+                        name: "FK_DateResponses_Questions_QuestionID",
+                        column: x => x.QuestionID,
+                        principalTable: "Questions",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_DateResponses_Responses_ResponseID",
+                        column: x => x.ResponseID,
+                        principalTable: "Responses",
+                        principalColumn: "ID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TextResponses",
+                columns: table => new
+                {
+                    ResponseID = table.Column<int>(nullable: false),
+                    QuestionID = table.Column<int>(nullable: false),
+                    ResponseText = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TextResponses", x => new { x.QuestionID, x.ResponseID });
+                    table.ForeignKey(
+                        name: "FK_TextResponses_Questions_QuestionID",
+                        column: x => x.QuestionID,
+                        principalTable: "Questions",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_TextResponses_Responses_ResponseID",
+                        column: x => x.ResponseID,
+                        principalTable: "Responses",
+                        principalColumn: "ID");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Applications_BusinessID",
                 table: "Applications",
@@ -188,9 +315,34 @@ namespace WildcatMicrofund.Migrations
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DateResponses_ResponseID",
+                table: "DateResponses",
+                column: "ResponseID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Questions_QuestionTypeID",
+                table: "Questions",
+                column: "QuestionTypeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Questions_SurveyCodeID",
+                table: "Questions",
+                column: "SurveyCodeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Responses_SurveyID",
+                table: "Responses",
+                column: "SurveyID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Surveys_SurveyCodeID",
                 table: "Surveys",
                 column: "SurveyCodeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TextResponses_ResponseID",
+                table: "TextResponses",
+                column: "ResponseID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserBusinesses_UserID",
@@ -201,6 +353,11 @@ namespace WildcatMicrofund.Migrations
                 name: "IX_Users_EthnicityID",
                 table: "Users",
                 column: "EthnicityID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_GenderID",
+                table: "Users",
+                column: "GenderID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -209,13 +366,22 @@ namespace WildcatMicrofund.Migrations
                 name: "Applications");
 
             migrationBuilder.DropTable(
+                name: "DateResponses");
+
+            migrationBuilder.DropTable(
+                name: "TextResponses");
+
+            migrationBuilder.DropTable(
                 name: "UserBusinesses");
 
             migrationBuilder.DropTable(
                 name: "UserRoles");
 
             migrationBuilder.DropTable(
-                name: "Surveys");
+                name: "Questions");
+
+            migrationBuilder.DropTable(
+                name: "Responses");
 
             migrationBuilder.DropTable(
                 name: "Businesses");
@@ -224,10 +390,19 @@ namespace WildcatMicrofund.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "SurveyCodes");
+                name: "QuestionTypes");
+
+            migrationBuilder.DropTable(
+                name: "Surveys");
 
             migrationBuilder.DropTable(
                 name: "Ethnicities");
+
+            migrationBuilder.DropTable(
+                name: "Gender");
+
+            migrationBuilder.DropTable(
+                name: "SurveyCodes");
         }
     }
 }

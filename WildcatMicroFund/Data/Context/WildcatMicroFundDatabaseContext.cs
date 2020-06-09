@@ -47,13 +47,21 @@ namespace WildcatMicroFund.Data.Context
                 .WithMany(s => s.Applications)
                 .HasForeignKey(a => a.SurveyID);
 
-            // Date Response
+            // DateResponse
             modelBuilder.Entity<DateResponse>()
                 .HasKey(dr => new { dr.QuestionID, dr.ResponseID });
-            modelBuilder.Entity<DateResponse>()
+            // DataResponse Response relationship
+/*            modelBuilder.Entity<DateResponse>()
                 .HasOne(dr => dr.Response)
-                .WithOne(r => r.DateResponse)
-                .HasForeignKey<Response>(r=> r.DateResponseID);
+                .WithMany(r => r.DateResponses)
+                .HasForeignKey(r=> r.ResponseID)
+                .OnDelete(DeleteBehavior.NoAction); 
+            //DateResponse Question relationship
+            modelBuilder.Entity<DateResponse>()
+                 .HasOne(dr => dr.Question)
+                 .WithMany(q => q.DateResponses)
+                 .HasForeignKey(q => q.QuestionID)
+                 .OnDelete(DeleteBehavior.NoAction);*/
 
 
             // Question
@@ -82,10 +90,18 @@ namespace WildcatMicroFund.Data.Context
             // Text Response
             modelBuilder.Entity<TextResponse>()
                 .HasKey(tr => new { tr.QuestionID, tr.ResponseID });
+/*            // Text Response Response relationship
             modelBuilder.Entity<TextResponse>()
                 .HasOne(tr => tr.Response)
-                .WithOne(r => r.TextResponse)
-                .HasForeignKey<Response>(r => r.TextResponseID);
+                .WithMany(r => r.TextResponse)
+                .HasForeignKey(tr => tr.ResponseID)
+                .OnDelete(DeleteBehavior.NoAction);
+            // Text Response Question relationship           
+            modelBuilder.Entity<TextResponse>()
+                .HasOne(tr => tr.Question)
+                .WithMany(q => q.TextResponses)
+                .HasForeignKey(tr => tr.QuestionID)
+                .OnDelete(DeleteBehavior.NoAction);*/
 
 
             // UserBusiness 
@@ -110,15 +126,14 @@ namespace WildcatMicroFund.Data.Context
                 .HasOne(u => u.UserRoleID)
                 .WithOne(ur => ur.User)
                 .HasForeignKey<UserRole>(ur => ur.ID);
-            //Gender
-            //User Gender relationship
 
+
+            //User
+            //User Gender relationship
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Gender)
                 .WithMany(g => g.Users)
-                .HasForeignKey(u => u.Gender);
-
-            //User
+                .HasForeignKey(u => u.GenderID);            
             //User Ethnicity relationship
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Ethnicity)

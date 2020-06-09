@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace WildcatMicroFund.Data.Models
@@ -17,9 +18,7 @@ namespace WildcatMicroFund.Data.Models
         
         // Different types of responses
         public DateResponse DateResponse { get; set; }
-        public int DateResponseID { get; internal set; }
         public TextResponse TextResponse { get; set; }
-        public int TextResponseID { get; set; }
         
     }
 }

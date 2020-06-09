@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WildcatMicroFund.Data.Context;
 
 namespace WildcatMicrofund.Migrations
 {
     [DbContext(typeof(WildcatMicroFundDatabaseContext))]
-    partial class WildcatMicroFundDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200609032425_InitialDb")]
+    partial class InitialDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,8 +88,7 @@ namespace WildcatMicrofund.Migrations
 
                     b.HasKey("QuestionID", "ResponseID");
 
-                    b.HasIndex("ResponseID")
-                        .IsUnique();
+                    b.HasIndex("ResponseID");
 
                     b.ToTable("DateResponses");
                 });
@@ -236,8 +237,7 @@ namespace WildcatMicrofund.Migrations
 
                     b.HasKey("QuestionID", "ResponseID");
 
-                    b.HasIndex("ResponseID")
-                        .IsUnique();
+                    b.HasIndex("ResponseID");
 
                     b.ToTable("TextResponses");
                 });
@@ -345,13 +345,13 @@ namespace WildcatMicrofund.Migrations
                     b.HasOne("WildcatMicroFund.Data.Models.Question", "Question")
                         .WithMany("DateResponses")
                         .HasForeignKey("QuestionID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("WildcatMicroFund.Data.Models.Response", "Response")
-                        .WithOne("DateResponse")
-                        .HasForeignKey("WildcatMicroFund.Data.Models.DateResponse", "ResponseID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithMany("DateResponses")
+                        .HasForeignKey("ResponseID")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -393,13 +393,13 @@ namespace WildcatMicrofund.Migrations
                     b.HasOne("WildcatMicroFund.Data.Models.Question", "Question")
                         .WithMany("TextResponses")
                         .HasForeignKey("QuestionID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("WildcatMicroFund.Data.Models.Response", "Response")
-                        .WithOne("TextResponse")
-                        .HasForeignKey("WildcatMicroFund.Data.Models.TextResponse", "ResponseID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithMany("TextResponses")
+                        .HasForeignKey("ResponseID")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
