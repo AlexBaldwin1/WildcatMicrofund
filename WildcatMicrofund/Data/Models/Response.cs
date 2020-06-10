@@ -19,6 +19,11 @@ namespace WildcatMicroFund.Data.Models
         // Different types of responses
         public DateResponse DateResponse { get; set; }
         public TextResponse TextResponse { get; set; }
-        
+        public NumericResponse NumericResponse { get; set; }
+        public YesNoResponse  YesNoResponse { get; set; }
+        public List<ChoiceMultipleChoiceResponse> ChoiceMultipleChoiceResponses { get; set; }
+        public SingleChoiceResponse SingleChoiceResponse { get; set; }
+
+
     }
 }

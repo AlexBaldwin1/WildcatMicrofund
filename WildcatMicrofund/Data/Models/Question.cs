@@ -18,5 +18,10 @@ namespace WildcatMicroFund.Data.Models
 
         public List<DateResponse> DateResponses { get; set; }
         public List<TextResponse> TextResponses { get; set; }
+        public List<NumericResponse> NumericResponses { get; set; }
+        public List<YesNoResponse> YesNoResponses { get; set; }
+        public List<Choice > Choices { get; set; } 
+        public List<ChoiceMultipleChoiceResponse> ChoiceMultipleChoiceResponses { get; set; }
+        public List<SingleChoiceResponse> SingleChoiceResponses { get; set; }
     }
 }

@@ -25,8 +25,13 @@ namespace WildcatMicroFund.Data.Context
         public DbSet<QuestionType> QuestionTypes { get; set; }
         public DbSet<Response> Responses { get; set; }
         public DbSet<TextResponse> TextResponses { get; set; }
-        
-        
+        public DbSet<NumericResponse> NumericResponses{ get; set; }
+        public DbSet <YesNoResponse> YesNoResponses { get; set; }
+        public DbSet <Choice> Choices { get; set; }
+        public DbSet<ChoiceMultipleChoiceResponse> ChoiceMultipleChoiceResponses { get; set; }
+        public DbSet<SingleChoiceResponse> SingleChoiceResponses{ get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -45,24 +50,31 @@ namespace WildcatMicroFund.Data.Context
             modelBuilder.Entity<Application>()
                 .HasOne(a => a.Survey)
                 .WithMany(s => s.Applications)
-                .HasForeignKey(a => a.SurveyID);
+                .HasForeignKey(a => a.SurveyID);     
 
             // DateResponse
             modelBuilder.Entity<DateResponse>()
                 .HasKey(dr => new { dr.QuestionID, dr.ResponseID });
             // DataResponse Response relationship
-/*            modelBuilder.Entity<DateResponse>()
-                .HasOne(dr => dr.Response)
-                .WithMany(r => r.DateResponses)
-                .HasForeignKey(r=> r.ResponseID)
-                .OnDelete(DeleteBehavior.NoAction); 
-            //DateResponse Question relationship
-            modelBuilder.Entity<DateResponse>()
-                 .HasOne(dr => dr.Question)
-                 .WithMany(q => q.DateResponses)
-                 .HasForeignKey(q => q.QuestionID)
-                 .OnDelete(DeleteBehavior.NoAction);*/
+            /*            modelBuilder.Entity<DateResponse>()
+                            .HasOne(dr => dr.Response)
+                            .WithMany(r => r.DateResponses)
+                            .HasForeignKey(r=> r.ResponseID)
+                            .OnDelete(DeleteBehavior.NoAction); 
+                        //DateResponse Question relationship
+                        modelBuilder.Entity<DateResponse>()
+                             .HasOne(dr => dr.Question)
+                             .WithMany(q => q.DateResponses)
+                             .HasForeignKey(q => q.QuestionID)
+                             .OnDelete(DeleteBehavior.NoAction);*/
 
+            // MultipleChoiseResponse
+            modelBuilder.Entity<ChoiceMultipleChoiceResponse>()
+                .HasKey(cm => new { cm.ChoiceID, cm.ResponseID, cm.QuestionID });
+
+            // NumericResponse
+            modelBuilder.Entity<NumericResponse>()
+                .HasKey(nr => new { nr.QuestionID, nr.ResponseID });
 
             // Question
             // Question Survey relationship
@@ -77,6 +89,10 @@ namespace WildcatMicroFund.Data.Context
                .HasOne(q => q.QuestionType)
                .WithMany(qt => qt.Questions)
                .HasForeignKey(q => q.QuestionTypeID);
+
+            // SingleChoiceResponse
+            modelBuilder.Entity<SingleChoiceResponse>()
+                .HasKey(scr => new { scr.ChoiceID, scr.ResponseID, scr.QuestionID });
 
 
             // Survey
@@ -140,6 +156,10 @@ namespace WildcatMicroFund.Data.Context
                 .WithMany(e => e.Users)
                 .HasForeignKey(u => u.EthnicityID);
 
+
+            // YesNoResponse
+            modelBuilder.Entity<YesNoResponse>()
+                .HasKey(ynr => new { ynr.QuestionID, ynr.ResponseID });
         }
     }
 }
