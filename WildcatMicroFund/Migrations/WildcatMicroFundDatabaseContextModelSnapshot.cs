@@ -73,6 +73,26 @@ namespace WildcatMicrofund.Migrations
                     b.ToTable("Businesses");
                 });
 
+            modelBuilder.Entity("WildcatMicroFund.Data.Models.Choice", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ChoiceText")
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<int>("QuestionID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("QuestionID");
+
+                    b.ToTable("Choices");
+                });
+
             modelBuilder.Entity("WildcatMicroFund.Data.Models.DateResponse", b =>
                 {
                     b.Property<int>("QuestionID")
@@ -122,6 +142,45 @@ namespace WildcatMicrofund.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Gender");
+                });
+
+            modelBuilder.Entity("WildcatMicroFund.Data.Models.MultipleChoiceResponse", b =>
+                {
+                    b.Property<int>("ChoiceID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ResponseID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuestionID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ChoiceID", "ResponseID", "QuestionID");
+
+                    b.HasIndex("QuestionID");
+
+                    b.HasIndex("ResponseID");
+
+                    b.ToTable("MultipleChoiceResponses");
+                });
+
+            modelBuilder.Entity("WildcatMicroFund.Data.Models.NumericResponse", b =>
+                {
+                    b.Property<int>("QuestionID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ResponseID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ResponseNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("QuestionID", "ResponseID");
+
+                    b.HasIndex("ResponseID")
+                        .IsUnique();
+
+                    b.ToTable("NumericResponses");
                 });
 
             modelBuilder.Entity("WildcatMicroFund.Data.Models.Question", b =>
@@ -189,6 +248,27 @@ namespace WildcatMicrofund.Migrations
                     b.HasIndex("SurveyID");
 
                     b.ToTable("Responses");
+                });
+
+            modelBuilder.Entity("WildcatMicroFund.Data.Models.SingleChoiceResponse", b =>
+                {
+                    b.Property<int>("ChoiceID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ResponseID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuestionID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ChoiceID", "ResponseID", "QuestionID");
+
+                    b.HasIndex("QuestionID");
+
+                    b.HasIndex("ResponseID")
+                        .IsUnique();
+
+                    b.ToTable("SingleChoiceResponses");
                 });
 
             modelBuilder.Entity("WildcatMicroFund.Data.Models.Survey", b =>
@@ -319,6 +399,25 @@ namespace WildcatMicrofund.Migrations
                     b.ToTable("UserRoles");
                 });
 
+            modelBuilder.Entity("WildcatMicroFund.Data.Models.YesNoResponse", b =>
+                {
+                    b.Property<int>("QuestionID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ResponseID")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("YesNoResponseValue")
+                        .HasColumnType("bit");
+
+                    b.HasKey("QuestionID", "ResponseID");
+
+                    b.HasIndex("ResponseID")
+                        .IsUnique();
+
+                    b.ToTable("YesNoResponses");
+                });
+
             modelBuilder.Entity("WildcatMicroFund.Data.Models.Application", b =>
                 {
                     b.HasOne("WildcatMicroFund.Data.Models.Business", "Business")
@@ -340,17 +439,62 @@ namespace WildcatMicrofund.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("WildcatMicroFund.Data.Models.Choice", b =>
+                {
+                    b.HasOne("WildcatMicroFund.Data.Models.Question", null)
+                        .WithMany("Choices")
+                        .HasForeignKey("QuestionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("WildcatMicroFund.Data.Models.DateResponse", b =>
                 {
                     b.HasOne("WildcatMicroFund.Data.Models.Question", "Question")
                         .WithMany("DateResponses")
                         .HasForeignKey("QuestionID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("WildcatMicroFund.Data.Models.Response", "Response")
                         .WithOne("DateResponse")
                         .HasForeignKey("WildcatMicroFund.Data.Models.DateResponse", "ResponseID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WildcatMicroFund.Data.Models.MultipleChoiceResponse", b =>
+                {
+                    b.HasOne("WildcatMicroFund.Data.Models.Choice", "Choice")
+                        .WithMany()
+                        .HasForeignKey("ChoiceID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WildcatMicroFund.Data.Models.Question", "Question")
+                        .WithMany("MultipleChoiceResponses")
+                        .HasForeignKey("QuestionID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("WildcatMicroFund.Data.Models.Response", "Response")
+                        .WithMany("MultipleChoiceResponses")
+                        .HasForeignKey("ResponseID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WildcatMicroFund.Data.Models.NumericResponse", b =>
+                {
+                    b.HasOne("WildcatMicroFund.Data.Models.Question", "Question")
+                        .WithMany("NumericResponses")
+                        .HasForeignKey("QuestionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WildcatMicroFund.Data.Models.Response", "Response")
+                        .WithOne("NumericResponse")
+                        .HasForeignKey("WildcatMicroFund.Data.Models.NumericResponse", "ResponseID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -375,6 +519,27 @@ namespace WildcatMicrofund.Migrations
                     b.HasOne("WildcatMicroFund.Data.Models.Survey", "Survey")
                         .WithMany()
                         .HasForeignKey("SurveyID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WildcatMicroFund.Data.Models.SingleChoiceResponse", b =>
+                {
+                    b.HasOne("WildcatMicroFund.Data.Models.Choice", "Choice")
+                        .WithMany()
+                        .HasForeignKey("ChoiceID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WildcatMicroFund.Data.Models.Question", "Question")
+                        .WithMany("SingleChoiceResponses")
+                        .HasForeignKey("QuestionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WildcatMicroFund.Data.Models.Response", "Response")
+                        .WithOne("SingleChoiceResponse")
+                        .HasForeignKey("WildcatMicroFund.Data.Models.SingleChoiceResponse", "ResponseID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -438,6 +603,21 @@ namespace WildcatMicrofund.Migrations
                     b.HasOne("WildcatMicroFund.Data.Models.User", "User")
                         .WithOne("UserRoleID")
                         .HasForeignKey("WildcatMicroFund.Data.Models.UserRole", "ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WildcatMicroFund.Data.Models.YesNoResponse", b =>
+                {
+                    b.HasOne("WildcatMicroFund.Data.Models.Question", "Question")
+                        .WithMany("YesNoResponses")
+                        .HasForeignKey("QuestionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WildcatMicroFund.Data.Models.Response", "Response")
+                        .WithOne("YesNoResponse")
+                        .HasForeignKey("WildcatMicroFund.Data.Models.YesNoResponse", "ResponseID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

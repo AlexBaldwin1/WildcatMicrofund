@@ -21,7 +21,7 @@ namespace WildcatMicroFund.Data.Models
         public List<NumericResponse> NumericResponses { get; set; }
         public List<YesNoResponse> YesNoResponses { get; set; }
         public List<Choice > Choices { get; set; } 
-        public List<ChoiceMultipleChoiceResponse> ChoiceMultipleChoiceResponses { get; set; }
+        public List<MultipleChoiceResponse> MultipleChoiceResponses { get; set; }
         public List<SingleChoiceResponse> SingleChoiceResponses { get; set; }
     }
 }

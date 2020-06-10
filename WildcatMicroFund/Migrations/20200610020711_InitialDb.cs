@@ -197,6 +197,26 @@ namespace WildcatMicrofund.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Choices",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ChoiceText = table.Column<string>(type: "varchar(500)", nullable: true),
+                    QuestionID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Choices", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Choices_Questions_QuestionID",
+                        column: x => x.QuestionID,
+                        principalTable: "Questions",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Applications",
                 columns: table => new
                 {
@@ -273,7 +293,95 @@ namespace WildcatMicrofund.Migrations
                         name: "FK_DateResponses_Responses_ResponseID",
                         column: x => x.ResponseID,
                         principalTable: "Responses",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MultipleChoiceResponses",
+                columns: table => new
+                {
+                    ChoiceID = table.Column<int>(nullable: false),
+                    ResponseID = table.Column<int>(nullable: false),
+                    QuestionID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MultipleChoiceResponses", x => new { x.ChoiceID, x.ResponseID, x.QuestionID });
+                    table.ForeignKey(
+                        name: "FK_MultipleChoiceResponses_Choices_ChoiceID",
+                        column: x => x.ChoiceID,
+                        principalTable: "Choices",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MultipleChoiceResponses_Questions_QuestionID",
+                        column: x => x.QuestionID,
+                        principalTable: "Questions",
                         principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_MultipleChoiceResponses_Responses_ResponseID",
+                        column: x => x.ResponseID,
+                        principalTable: "Responses",
+                        principalColumn: "ID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NumericResponses",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ResponseID = table.Column<int>(nullable: false),
+                    QuestionID = table.Column<int>(nullable: false),
+                    ResponseNumber = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NumericResponses", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_NumericResponses_Questions_QuestionID",
+                        column: x => x.QuestionID,
+                        principalTable: "Questions",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_NumericResponses_Responses_ResponseID",
+                        column: x => x.ResponseID,
+                        principalTable: "Responses",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SingleChoiceResponses",
+                columns: table => new
+                {
+                    ChoiceID = table.Column<int>(nullable: false),
+                    ResponseID = table.Column<int>(nullable: false),
+                    QuestionID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SingleChoiceResponses", x => new { x.ChoiceID, x.ResponseID, x.QuestionID });
+                    table.ForeignKey(
+                        name: "FK_SingleChoiceResponses_Choices_ChoiceID",
+                        column: x => x.ChoiceID,
+                        principalTable: "Choices",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SingleChoiceResponses_Questions_QuestionID",
+                        column: x => x.QuestionID,
+                        principalTable: "Questions",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_SingleChoiceResponses_Responses_ResponseID",
+                        column: x => x.ResponseID,
+                        principalTable: "Responses",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -291,12 +399,39 @@ namespace WildcatMicrofund.Migrations
                         name: "FK_TextResponses_Questions_QuestionID",
                         column: x => x.QuestionID,
                         principalTable: "Questions",
-                        principalColumn: "ID");
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TextResponses_Responses_ResponseID",
                         column: x => x.ResponseID,
                         principalTable: "Responses",
-                        principalColumn: "ID");
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "YesNoResponses",
+                columns: table => new
+                {
+                    ResponseID = table.Column<int>(nullable: false),
+                    QuestionID = table.Column<int>(nullable: false),
+                    YesNoResponseValue = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_YesNoResponses", x => new { x.QuestionID, x.ResponseID });
+                    table.ForeignKey(
+                        name: "FK_YesNoResponses_Questions_QuestionID",
+                        column: x => x.QuestionID,
+                        principalTable: "Questions",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_YesNoResponses_Responses_ResponseID",
+                        column: x => x.ResponseID,
+                        principalTable: "Responses",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
@@ -315,9 +450,36 @@ namespace WildcatMicrofund.Migrations
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Choices_QuestionID",
+                table: "Choices",
+                column: "QuestionID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DateResponses_ResponseID",
                 table: "DateResponses",
+                column: "ResponseID",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MultipleChoiceResponses_QuestionID",
+                table: "MultipleChoiceResponses",
+                column: "QuestionID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MultipleChoiceResponses_ResponseID",
+                table: "MultipleChoiceResponses",
                 column: "ResponseID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NumericResponses_QuestionID",
+                table: "NumericResponses",
+                column: "QuestionID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NumericResponses_ResponseID",
+                table: "NumericResponses",
+                column: "ResponseID",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Questions_QuestionTypeID",
@@ -335,6 +497,17 @@ namespace WildcatMicrofund.Migrations
                 column: "SurveyID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SingleChoiceResponses_QuestionID",
+                table: "SingleChoiceResponses",
+                column: "QuestionID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SingleChoiceResponses_ResponseID",
+                table: "SingleChoiceResponses",
+                column: "ResponseID",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Surveys_SurveyCodeID",
                 table: "Surveys",
                 column: "SurveyCodeID");
@@ -342,7 +515,8 @@ namespace WildcatMicrofund.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_TextResponses_ResponseID",
                 table: "TextResponses",
-                column: "ResponseID");
+                column: "ResponseID",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserBusinesses_UserID",
@@ -358,6 +532,12 @@ namespace WildcatMicrofund.Migrations
                 name: "IX_Users_GenderID",
                 table: "Users",
                 column: "GenderID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_YesNoResponses_ResponseID",
+                table: "YesNoResponses",
+                column: "ResponseID",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -369,6 +549,15 @@ namespace WildcatMicrofund.Migrations
                 name: "DateResponses");
 
             migrationBuilder.DropTable(
+                name: "MultipleChoiceResponses");
+
+            migrationBuilder.DropTable(
+                name: "NumericResponses");
+
+            migrationBuilder.DropTable(
+                name: "SingleChoiceResponses");
+
+            migrationBuilder.DropTable(
                 name: "TextResponses");
 
             migrationBuilder.DropTable(
@@ -378,10 +567,10 @@ namespace WildcatMicrofund.Migrations
                 name: "UserRoles");
 
             migrationBuilder.DropTable(
-                name: "Questions");
+                name: "YesNoResponses");
 
             migrationBuilder.DropTable(
-                name: "Responses");
+                name: "Choices");
 
             migrationBuilder.DropTable(
                 name: "Businesses");
@@ -390,16 +579,22 @@ namespace WildcatMicrofund.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "QuestionTypes");
+                name: "Responses");
 
             migrationBuilder.DropTable(
-                name: "Surveys");
+                name: "Questions");
 
             migrationBuilder.DropTable(
                 name: "Ethnicities");
 
             migrationBuilder.DropTable(
                 name: "Gender");
+
+            migrationBuilder.DropTable(
+                name: "Surveys");
+
+            migrationBuilder.DropTable(
+                name: "QuestionTypes");
 
             migrationBuilder.DropTable(
                 name: "SurveyCodes");

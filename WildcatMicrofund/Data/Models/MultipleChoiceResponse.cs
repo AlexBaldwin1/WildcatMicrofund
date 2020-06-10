@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WildcatMicroFund.Data.Models
 {
-    public class ChoiceMultipleChoiceResponse
+    public class MultipleChoiceResponse
 
     {
         public int ChoiceID { get; set; }
