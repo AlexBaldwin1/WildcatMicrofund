@@ -30,6 +30,7 @@ namespace WildcatMicroFund.Data.Context
         public DbSet <Choice> Choices { get; set; }
         public DbSet<MultipleChoiceResponse> MultipleChoiceResponses { get; set; }
         public DbSet<SingleChoiceResponse> SingleChoiceResponses{ get; set; }
+        public DbSet<Gender> Genders { get; set; }
 
 
 
