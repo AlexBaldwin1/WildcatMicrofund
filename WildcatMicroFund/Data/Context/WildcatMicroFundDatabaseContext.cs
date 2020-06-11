@@ -31,6 +31,8 @@ namespace WildcatMicroFund.Data.Context
         public DbSet<MultipleChoiceResponse> MultipleChoiceResponses { get; set; }
         public DbSet<SingleChoiceResponse> SingleChoiceResponses{ get; set; }
         public DbSet<Gender> Genders { get; set; }
+        public DbSet<Role> Roles { get; set; }
+
 
 
 
@@ -160,11 +162,13 @@ namespace WildcatMicroFund.Data.Context
 
 
             // User Roles
+            modelBuilder.Entity<UserRole>()
+               .HasKey(ur => new { ur.UserID, ur.RoleID});
             // UserRoles User relationship
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.UserRoleID)
-                .WithOne(ur => ur.User)
-                .HasForeignKey<UserRole>(ur => ur.ID);
+            /*   modelBuilder.Entity<User>()
+                   .HasOne(u => u.UserRoleID)
+                   .WithOne(ur => ur.User)
+                   .HasForeignKey<UserRole>(ur => ur.ID);*/
 
 
             //User
