@@ -13,7 +13,6 @@ namespace WildcatMicroFund.Data.Models
         [Required]
         [Column(TypeName = "varchar(100)")]
         public string EthnicityDescription { get; set; }
-
         public List<User> Users { get; set; }
     }
 }

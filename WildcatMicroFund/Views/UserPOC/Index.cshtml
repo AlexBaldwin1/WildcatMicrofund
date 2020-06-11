@@ -18,10 +18,6 @@
 <table class="table">
     <thead>
         <tr>
-
-            <th>
-                @Html.DisplayNameFor(model => model.UserRoleID)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
@@ -34,8 +30,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.PhoneNumber)
             </th>
-
-            
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ethnicity)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.StreetAddress)
             </th>
@@ -55,9 +55,6 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.UserRoleID)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
@@ -70,9 +67,11 @@
                 @Html.DisplayFor(modelItem => item.PhoneNumber)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Gender)
+                @Html.DisplayFor(modelItem => item.Gender.Description)
             </td>
-            
+            <td>
+                @Html.DisplayFor(modelItem => item.Ethnicity.EthnicityDescription)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StreetAddress)
             </td>

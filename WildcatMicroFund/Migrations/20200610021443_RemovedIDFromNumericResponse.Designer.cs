@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WildcatMicroFund.Data.Context;
 
 namespace WildcatMicrofund.Migrations
 {
     [DbContext(typeof(WildcatMicroFundDatabaseContext))]
-    partial class WildcatMicroFundDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200610021443_RemovedIDFromNumericResponse")]
+    partial class RemovedIDFromNumericResponse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,7 +143,7 @@ namespace WildcatMicrofund.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Genders");
+                    b.ToTable("Gender");
                 });
 
             modelBuilder.Entity("WildcatMicroFund.Data.Models.MultipleChoiceResponse", b =>

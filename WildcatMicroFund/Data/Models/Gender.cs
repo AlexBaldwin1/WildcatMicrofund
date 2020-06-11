@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+
 namespace WildcatMicroFund.Data.Models
 {
     public class Gender
@@ -11,12 +12,8 @@ namespace WildcatMicroFund.Data.Models
         [Required]
         [Column(TypeName = "varchar(100)")]
         public string Description { get; set; }
-        public List<User>? Users { get; set; }
+        public List<User> Users { get; set; }
 
-        public Gender()
-        {
-
-        }
-    
+     
     }
 }

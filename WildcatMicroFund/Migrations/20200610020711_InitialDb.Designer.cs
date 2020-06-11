@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WildcatMicroFund.Data.Context;
 
 namespace WildcatMicrofund.Migrations
 {
     [DbContext(typeof(WildcatMicroFundDatabaseContext))]
-    partial class WildcatMicroFundDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200610020711_InitialDb")]
+    partial class InitialDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,7 +143,7 @@ namespace WildcatMicrofund.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Genders");
+                    b.ToTable("Gender");
                 });
 
             modelBuilder.Entity("WildcatMicroFund.Data.Models.MultipleChoiceResponse", b =>
@@ -166,6 +168,11 @@ namespace WildcatMicrofund.Migrations
 
             modelBuilder.Entity("WildcatMicroFund.Data.Models.NumericResponse", b =>
                 {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<int>("QuestionID")
                         .HasColumnType("int");
 
@@ -175,7 +182,9 @@ namespace WildcatMicrofund.Migrations
                     b.Property<int>("ResponseNumber")
                         .HasColumnType("int");
 
-                    b.HasKey("QuestionID", "ResponseID");
+                    b.HasKey("ID");
+
+                    b.HasIndex("QuestionID");
 
                     b.HasIndex("ResponseID")
                         .IsUnique();

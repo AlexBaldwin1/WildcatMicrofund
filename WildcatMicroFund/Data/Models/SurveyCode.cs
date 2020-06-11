@@ -7,5 +7,7 @@ namespace WildcatMicroFund.Data.Models
         public int ID { get; set; }
         public string SurveyName { get; set; }
         public List<Survey> Surveys { get; set; }
+
+        public List<Question> Questions { get; set; }
     }
 }
