@@ -9,7 +9,8 @@ namespace WildcatMicroFund.Data.Models
     public class User
     {
         public int ID { get; set; }
-        public UserRole UserRoleID {get; set;}
+        public List<UserRole> UserRoles {get; set;}
+        
         [Required]
         [Column(TypeName = "varchar(400)")]
         public string Email { get; set; }

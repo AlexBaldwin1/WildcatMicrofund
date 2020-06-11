@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WildcatMicroFund.Data.Context;
 
 namespace WildcatMicrofund.Migrations
 {
     [DbContext(typeof(WildcatMicroFundDatabaseContext))]
-    partial class WildcatMicroFundDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200611022728_UserCanHaveMultipleRoles")]
+    partial class UserCanHaveMultipleRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

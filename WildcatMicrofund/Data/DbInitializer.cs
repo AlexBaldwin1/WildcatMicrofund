@@ -93,19 +93,17 @@ namespace WildcatMicroFund.Data
                 context.SaveChanges();
             }
 
+            var user1 = (from u in context.Users
+                         where u.FirstName == "William"
+                         select u).First<User>();
+            var business1 = (from b in context.Businesses
+                             where b.BusinessName == "Billy's Burgers"
+                             select b).FirstOrDefault<Business>();
 
-            if (context.UserBusinesses.Any())
+            if (!context.UserBusinesses.Any())
             {
                 //No connection between the business and user
-                // Get the ids that were created to connect them together.
-                var user1 = (from u in context.Users
-                             where u.FirstName == "William"
-                             select u).First<User>();
-                var business1 = (from b in context.Businesses
-                                 where b.BusinessName == "Billy's Burgers"
-                                 select b).FirstOrDefault<Business>();
-
-
+               
                 // UserBusinesses
                 var userBusinesses = new UserBusiness[]
                 {
@@ -120,11 +118,41 @@ namespace WildcatMicroFund.Data
 
 
 
+                // User Roles
+                /*var userRoles = new UserRole[]
+                {
+                    new UserRole{ID=user1.ID, RoleDescription="Admin"}
+                 };
+                foreach (UserRole ur in userRoles)
+                {
+                    context.UserRoles.Add(ur);
+                }
+                context.SaveChanges();*/
+
+            }
+
+            if (!context.Roles.Any())
+            {
+                // Roles
+                var roles = new Role[]
+                {
+                    new Role{ RoleDescription="Admin"},
+                    new Role{ RoleDescription="Intern"},
+                    new Role{ RoleDescription="Mentor"},
+                    new Role{ RoleDescription="Applicant"}
+
+                 };
+                foreach (Role r in roles)
+                {
+                    context.Roles.Add(r);
+                }
+                context.SaveChanges();
+
 
                 // User Roles
                 var userRoles = new UserRole[]
                 {
-                    new UserRole{ID=user1.ID, RoleDescription="Admin"}
+                    new UserRole{User=user1, Role=roles[0]}
                  };
                 foreach (UserRole ur in userRoles)
                 {
@@ -135,8 +163,8 @@ namespace WildcatMicroFund.Data
             }
 
 
-            //if (!context.Surveys.Any())
-            if(false)
+
+            if (!context.Surveys.Any())            
             {
 
                 // Add a survey code
@@ -152,8 +180,7 @@ namespace WildcatMicroFund.Data
                 }
                 context.SaveChanges();
 
-                //TODO Check that maybe I can just user surveryCode[0] instead
-
+                
                 var testSurveyCode = (from sc in context.SurveyCodes
                                       where sc.SurveyName == "Test Survey"
                                       select sc).FirstOrDefault<SurveyCode>();
@@ -190,8 +217,8 @@ namespace WildcatMicroFund.Data
                     new Question{SurveyCodeID = testSurveyCode.ID, QuestionText= "What is your quest?", QuestionNumber= 1, QuestionTypeID = questionType[0].ID},
                     new Question{SurveyCodeID = testSurveyCode.ID, QuestionText= "What is the airspeed velocity of an unladen swallow?", QuestionNumber= 2, QuestionTypeID = questionType[1].ID},
                     new Question{SurveyCodeID = testSurveyCode.ID, QuestionText= "When was Monty Python and the Holy Grail Released?", QuestionNumber= 3, QuestionTypeID = questionType[2].ID},
-                    new Question{SurveyCodeID = testSurveyCode.ID, QuestionText= "", QuestionNumber= 4, QuestionTypeID = questionType[3].ID},
-                    new Question{SurveyCodeID = testSurveyCode.ID, QuestionText= "What is the capital of Assyria?", QuestionNumber= 5, QuestionTypeID = questionType[4].ID},
+                    new Question{SurveyCodeID = testSurveyCode.ID, QuestionText= "Are you on a quest", QuestionNumber= 4, QuestionTypeID = questionType[3].ID},
+                    new Question{SurveyCodeID = testSurveyCode.ID, QuestionText= "What is the capital of Assyria in 705-612 BC?", QuestionNumber= 5, QuestionTypeID = questionType[4].ID},
                     new Question{SurveyCodeID = testSurveyCode.ID, QuestionText= "What are your favorite color?s", QuestionNumber= 6, QuestionTypeID = questionType[5].ID}
                 };
                 foreach (Question q in question)
@@ -204,13 +231,26 @@ namespace WildcatMicroFund.Data
                 var choices = new Choice[]
                 {
                     // What is the capital of Assyria                    
-                    //new Choice{}
+                    new Choice{ChoiceText = "Nineveh", QuestionID = question[4].ID},
+                    new Choice{ChoiceText = "Kalhu", QuestionID = question[4].ID},
+                    new Choice{ChoiceText = "Harran", QuestionID = question[4].ID},
+                    new Choice{ChoiceText = "Mesoptamia", QuestionID = question[4].ID},
+                    new Choice{ChoiceText = "Blue", QuestionID = question[5].ID},
+                    new Choice{ChoiceText = "Green", QuestionID = question[5].ID},
+                    new Choice{ChoiceText = "Red", QuestionID = question[5].ID},
+                    new Choice{ChoiceText = "Yellow", QuestionID = question[5].ID},
+                    new Choice{ChoiceText = "Purple", QuestionID = question[5].ID},
+                    new Choice{ChoiceText = "Teal", QuestionID = question[5].ID}
+
                 };
+                foreach(Choice c in choices)
+                {
+                    context.Add(c);
+
+                }
+                context.SaveChanges();                   
                    
-                
-
-
-            }
+             }
 
 
 
