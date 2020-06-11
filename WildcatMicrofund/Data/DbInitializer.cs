@@ -109,7 +109,7 @@ namespace WildcatMicroFund.Data
                 // UserBusinesses
                 var userBusinesses = new UserBusiness[]
                 {
-                    new UserBusiness{BusinessID = business1.ID, UserID = user1.ID}
+                    new UserBusiness{BusinessID = business1.ID,Business = business1, UserID = user1.ID, User = user1}
                 };
 
                 foreach (UserBusiness ub in userBusinesses)
