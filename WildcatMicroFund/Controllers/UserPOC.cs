@@ -10,22 +10,23 @@ using WildcatMicroFund.Data.Models;
 
 namespace WildcatMicroFund.Controllers
 {
-    public class UserControllerProofOfConcenpt : Controller
+    public class UserPOC : Controller
     {
-        private WildcatMicroFundDatabaseContext _context;
+        private readonly WildcatMicroFundDatabaseContext _context;
 
-        public UserControllerProofOfConcenpt(WildcatMicroFundDatabaseContext context)
+        public UserPOC(WildcatMicroFundDatabaseContext context)
         {
             _context = context;
         }
 
-        // GET: UserControllerProofOfConcenpt
+        // GET: UserPOC
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Users.ToListAsync());
+            var wildcatMicroFundDatabaseContext = _context.Users.Include(u => u.Ethnicity).Include(u => u.Gender);
+            return View(await wildcatMicroFundDatabaseContext.ToListAsync());
         }
 
-        // GET: UserControllerProofOfConcenpt/Details/5
+        // GET: UserPOC/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,6 +35,8 @@ namespace WildcatMicroFund.Controllers
             }
 
             var user = await _context.Users
+                .Include(u => u.Ethnicity)
+                .Include(u => u.Gender)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (user == null)
             {
@@ -43,18 +46,20 @@ namespace WildcatMicroFund.Controllers
             return View(user);
         }
 
-        // GET: UserControllerProofOfConcenpt/Create
+        // GET: UserPOC/Create
         public IActionResult Create()
         {
+            ViewData["EthnicityID"] = new SelectList(_context.Ethnicities, "ID", "EthnicityDescription");
+            ViewData["GenderID"] = new SelectList(_context.Genders, "ID", "Description");
             return View();
         }
 
-        // POST: UserControllerProofOfConcenpt/Create
+        // POST: UserPOC/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Email,FirstName,LastName,PhoneNumber,Sex,Race,StreetAddress,City,State,Zip")] User user)
+        public async Task<IActionResult> Create([Bind("ID,Email,FirstName,LastName,PhoneNumber,GenderID,EthnicityID,StreetAddress,City,State,Zip")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -62,10 +67,12 @@ namespace WildcatMicroFund.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["EthnicityID"] = new SelectList(_context.Ethnicities, "ID", "EthnicityDescription", user.EthnicityID);
+            ViewData["GenderID"] = new SelectList(_context.Genders, "ID", "Description", user.GenderID);
             return View(user);
         }
 
-        // GET: UserControllerProofOfConcenpt/Edit/5
+        // GET: UserPOC/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,15 +85,17 @@ namespace WildcatMicroFund.Controllers
             {
                 return NotFound();
             }
+            ViewData["EthnicityID"] = new SelectList(_context.Ethnicities, "ID", "EthnicityDescription", user.EthnicityID);
+            ViewData["GenderID"] = new SelectList(_context.Genders, "ID", "Description", user.GenderID);
             return View(user);
         }
 
-        // POST: UserControllerProofOfConcenpt/Edit/5
+        // POST: UserPOC/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Email,FirstName,LastName,PhoneNumber,Sex,Race,StreetAddress,City,State,Zip")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Email,FirstName,LastName,PhoneNumber,GenderID,EthnicityID,StreetAddress,City,State,Zip")] User user)
         {
             if (id != user.ID)
             {
@@ -113,10 +122,12 @@ namespace WildcatMicroFund.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["EthnicityID"] = new SelectList(_context.Ethnicities, "ID", "EthnicityDescription", user.EthnicityID);
+            ViewData["GenderID"] = new SelectList(_context.Genders, "ID", "Description", user.GenderID);
             return View(user);
         }
 
-        // GET: UserControllerProofOfConcenpt/Delete/5
+        // GET: UserPOC/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -125,6 +136,8 @@ namespace WildcatMicroFund.Controllers
             }
 
             var user = await _context.Users
+                .Include(u => u.Ethnicity)
+                .Include(u => u.Gender)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (user == null)
             {
@@ -134,7 +147,7 @@ namespace WildcatMicroFund.Controllers
             return View(user);
         }
 
-        // POST: UserControllerProofOfConcenpt/Delete/5
+        // POST: UserPOC/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
