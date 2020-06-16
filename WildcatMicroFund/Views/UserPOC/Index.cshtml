@@ -91,12 +91,18 @@
                 @Html.DisplayFor(modelItem => item.Zip)
             </td>
 
+            @foreach (var role in item.UserRoles)
+            {
+                int i = 0;
+
+                <td>
+                    @role.Role.RoleDescription
+                </td>
+                i++;
+            }
 
             <td>
-                @Html.DisplayFor(modelItem => item.UserBusinesses.ElementAt(0).BusinessID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserRoles.ElementAt(1).RoleID)
+                @Html.DisplayFor(modelItem => item.UserRoles.ElementAt(0).Role.RoleDescription)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
