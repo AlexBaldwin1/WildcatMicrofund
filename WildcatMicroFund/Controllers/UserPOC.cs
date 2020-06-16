@@ -22,7 +22,7 @@ namespace WildcatMicroFund.Controllers
         // GET: UserPOC
         public async Task<IActionResult> Index()
         {
-            var wildcatMicroFundDatabaseContext = _context.Users.Include(u => u.Ethnicity).Include(u => u.Gender);
+            var wildcatMicroFundDatabaseContext = _context.Users.Include(u => u.Ethnicity).Include(u => u.Gender).Include(u => u.UserBusinesses).Include(u => u.UserRoles);
             return View(await wildcatMicroFundDatabaseContext.ToListAsync());
         }
 
@@ -34,9 +34,13 @@ namespace WildcatMicroFund.Controllers
                 return NotFound();
             }
 
+            
+
             var user = await _context.Users
                 .Include(u => u.Ethnicity)
                 .Include(u => u.Gender)
+                .Include(u => u.UserRoles)
+                .Include(u => u.UserBusinesses)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (user == null)
             {
@@ -51,6 +55,7 @@ namespace WildcatMicroFund.Controllers
         {
             ViewData["EthnicityID"] = new SelectList(_context.Ethnicities, "ID", "EthnicityDescription");
             ViewData["GenderID"] = new SelectList(_context.Genders, "ID", "Description");
+            ViewData["RolesID"] = new SelectList(_context.Roles, "ID", "RoleDescription");
             return View();
         }
 
@@ -69,6 +74,7 @@ namespace WildcatMicroFund.Controllers
             }
             ViewData["EthnicityID"] = new SelectList(_context.Ethnicities, "ID", "EthnicityDescription", user.EthnicityID);
             ViewData["GenderID"] = new SelectList(_context.Genders, "ID", "Description", user.GenderID);
+            ViewData["RolesID"] = new SelectList(_context.Roles, "ID", "RoleDescription",user.UserRoles.ElementAt(0));
             return View(user);
         }
 

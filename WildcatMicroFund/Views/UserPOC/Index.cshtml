@@ -48,6 +48,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Zip)
             </th>
+            <th>
+            @Html.DisplayNameFor(model => model.UserBusinesses)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserRoles)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -84,14 +90,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Zip)
             </td>
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.UserBusinesses.ElementAt(0).BusinessID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserRoles.ElementAt(1).RoleID)
+            </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.UserBusinesses.ElementAtOrDefault(0).Business.BusinessName)
             </td>
         </tr>
 }
