@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WildcatMicrofund.Migrations
 {
-    public partial class InitialDb : Migration
+    public partial class InitialDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -34,7 +34,7 @@ namespace WildcatMicrofund.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Gender",
+                name: "Genders",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -43,7 +43,7 @@ namespace WildcatMicrofund.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Gender", x => x.ID);
+                    table.PrimaryKey("PK_Genders", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -58,6 +58,19 @@ namespace WildcatMicrofund.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_QuestionTypes", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Roles",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleDescription = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Roles", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -100,9 +113,9 @@ namespace WildcatMicrofund.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Users_Gender_GenderID",
+                        name: "FK_Users_Genders_GenderID",
                         column: x => x.GenderID,
-                        principalTable: "Gender",
+                        principalTable: "Genders",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -158,12 +171,14 @@ namespace WildcatMicrofund.Migrations
                 name: "UserBusinesses",
                 columns: table => new
                 {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     BusinessID = table.Column<int>(nullable: false),
                     UserID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserBusinesses", x => new { x.BusinessID, x.UserID });
+                    table.PrimaryKey("PK_UserBusinesses", x => x.ID);
                     table.ForeignKey(
                         name: "FK_UserBusinesses_Businesses_BusinessID",
                         column: x => x.BusinessID,
@@ -182,15 +197,23 @@ namespace WildcatMicrofund.Migrations
                 name: "UserRoles",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false),
-                    RoleDescription = table.Column<string>(nullable: true)
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserID = table.Column<int>(nullable: false),
+                    RoleID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserRoles", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_UserRoles_Users_ID",
-                        column: x => x.ID,
+                        name: "FK_UserRoles_Roles_RoleID",
+                        column: x => x.RoleID,
+                        principalTable: "Roles",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserRoles_Users_UserID",
+                        column: x => x.UserID,
                         principalTable: "Users",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -277,37 +300,42 @@ namespace WildcatMicrofund.Migrations
                 name: "DateResponses",
                 columns: table => new
                 {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     ResponseID = table.Column<int>(nullable: false),
                     QuestionID = table.Column<int>(nullable: false),
                     ResponseDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DateResponses", x => new { x.QuestionID, x.ResponseID });
+                    table.PrimaryKey("PK_DateResponses", x => x.ID);
                     table.ForeignKey(
                         name: "FK_DateResponses_Questions_QuestionID",
                         column: x => x.QuestionID,
                         principalTable: "Questions",
-                        principalColumn: "ID");
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_DateResponses_Responses_ResponseID",
                         column: x => x.ResponseID,
                         principalTable: "Responses",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
                 name: "MultipleChoiceResponses",
                 columns: table => new
                 {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     ChoiceID = table.Column<int>(nullable: false),
                     ResponseID = table.Column<int>(nullable: false),
                     QuestionID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MultipleChoiceResponses", x => new { x.ChoiceID, x.ResponseID, x.QuestionID });
+                    table.PrimaryKey("PK_MultipleChoiceResponses", x => x.ID);
                     table.ForeignKey(
                         name: "FK_MultipleChoiceResponses_Choices_ChoiceID",
                         column: x => x.ChoiceID,
@@ -318,12 +346,14 @@ namespace WildcatMicrofund.Migrations
                         name: "FK_MultipleChoiceResponses_Questions_QuestionID",
                         column: x => x.QuestionID,
                         principalTable: "Questions",
-                        principalColumn: "ID");
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_MultipleChoiceResponses_Responses_ResponseID",
                         column: x => x.ResponseID,
                         principalTable: "Responses",
-                        principalColumn: "ID");
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -344,7 +374,7 @@ namespace WildcatMicrofund.Migrations
                         column: x => x.QuestionID,
                         principalTable: "Questions",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_NumericResponses_Responses_ResponseID",
                         column: x => x.ResponseID,
@@ -357,13 +387,15 @@ namespace WildcatMicrofund.Migrations
                 name: "SingleChoiceResponses",
                 columns: table => new
                 {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     ChoiceID = table.Column<int>(nullable: false),
                     ResponseID = table.Column<int>(nullable: false),
                     QuestionID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SingleChoiceResponses", x => new { x.ChoiceID, x.ResponseID, x.QuestionID });
+                    table.PrimaryKey("PK_SingleChoiceResponses", x => x.ID);
                     table.ForeignKey(
                         name: "FK_SingleChoiceResponses_Choices_ChoiceID",
                         column: x => x.ChoiceID,
@@ -388,19 +420,21 @@ namespace WildcatMicrofund.Migrations
                 name: "TextResponses",
                 columns: table => new
                 {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     ResponseID = table.Column<int>(nullable: false),
                     QuestionID = table.Column<int>(nullable: false),
                     ResponseText = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TextResponses", x => new { x.QuestionID, x.ResponseID });
+                    table.PrimaryKey("PK_TextResponses", x => x.ID);
                     table.ForeignKey(
                         name: "FK_TextResponses_Questions_QuestionID",
                         column: x => x.QuestionID,
                         principalTable: "Questions",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_TextResponses_Responses_ResponseID",
                         column: x => x.ResponseID,
@@ -413,19 +447,21 @@ namespace WildcatMicrofund.Migrations
                 name: "YesNoResponses",
                 columns: table => new
                 {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     ResponseID = table.Column<int>(nullable: false),
                     QuestionID = table.Column<int>(nullable: false),
                     YesNoResponseValue = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_YesNoResponses", x => new { x.QuestionID, x.ResponseID });
+                    table.PrimaryKey("PK_YesNoResponses", x => x.ID);
                     table.ForeignKey(
                         name: "FK_YesNoResponses_Questions_QuestionID",
                         column: x => x.QuestionID,
                         principalTable: "Questions",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_YesNoResponses_Responses_ResponseID",
                         column: x => x.ResponseID,
@@ -455,10 +491,20 @@ namespace WildcatMicrofund.Migrations
                 column: "QuestionID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DateResponses_QuestionID",
+                table: "DateResponses",
+                column: "QuestionID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DateResponses_ResponseID",
                 table: "DateResponses",
                 column: "ResponseID",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MultipleChoiceResponses_ChoiceID",
+                table: "MultipleChoiceResponses",
+                column: "ChoiceID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MultipleChoiceResponses_QuestionID",
@@ -497,6 +543,11 @@ namespace WildcatMicrofund.Migrations
                 column: "SurveyID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SingleChoiceResponses_ChoiceID",
+                table: "SingleChoiceResponses",
+                column: "ChoiceID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SingleChoiceResponses_QuestionID",
                 table: "SingleChoiceResponses",
                 column: "QuestionID");
@@ -513,14 +564,34 @@ namespace WildcatMicrofund.Migrations
                 column: "SurveyCodeID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TextResponses_QuestionID",
+                table: "TextResponses",
+                column: "QuestionID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TextResponses_ResponseID",
                 table: "TextResponses",
                 column: "ResponseID",
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserBusinesses_BusinessID",
+                table: "UserBusinesses",
+                column: "BusinessID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserBusinesses_UserID",
                 table: "UserBusinesses",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRoles_RoleID",
+                table: "UserRoles",
+                column: "RoleID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRoles_UserID",
+                table: "UserRoles",
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
@@ -532,6 +603,11 @@ namespace WildcatMicrofund.Migrations
                 name: "IX_Users_GenderID",
                 table: "Users",
                 column: "GenderID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_YesNoResponses_QuestionID",
+                table: "YesNoResponses",
+                column: "QuestionID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_YesNoResponses_ResponseID",
@@ -576,6 +652,9 @@ namespace WildcatMicrofund.Migrations
                 name: "Businesses");
 
             migrationBuilder.DropTable(
+                name: "Roles");
+
+            migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
@@ -588,7 +667,7 @@ namespace WildcatMicrofund.Migrations
                 name: "Ethnicities");
 
             migrationBuilder.DropTable(
-                name: "Gender");
+                name: "Genders");
 
             migrationBuilder.DropTable(
                 name: "Surveys");

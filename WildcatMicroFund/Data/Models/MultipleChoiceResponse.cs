@@ -6,6 +6,7 @@ namespace WildcatMicroFund.Data.Models
     public class MultipleChoiceResponse
 
     {
+        public int ID { get; set; }
         public int ChoiceID { get; set; }
         public Choice Choice { get; set; }
         public int ResponseID { get; set; }
