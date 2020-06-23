@@ -8,5 +8,6 @@ namespace WildcatMicroFund.Data.Models
         public SurveyCode SurveyCode { get; set; }
         public int SurveyCodeID { get; set; }
         public List<Application>? Applications { get; set; }
+        public List<Response> Responses { get; set; }
     }
 }

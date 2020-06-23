@@ -534,7 +534,7 @@ namespace WildcatMicrofund.Migrations
             modelBuilder.Entity("WildcatMicroFund.Data.Models.Response", b =>
                 {
                     b.HasOne("WildcatMicroFund.Data.Models.Survey", "Survey")
-                        .WithMany()
+                        .WithMany("Responses")
                         .HasForeignKey("SurveyID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
