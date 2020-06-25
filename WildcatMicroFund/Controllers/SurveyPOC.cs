@@ -43,7 +43,7 @@ namespace WildcatMicroFund.Controllers
         }
 
         //GET: SurveyPOC/TakeSurveyWithSurveyID/ID
-        public async Task<IActionResult> TakeSurveyWithSurveyID(int surveyCode)
+        public async Task<IActionResult> TakeSurveyWithSurveyID(int id)
         {
             // Temp
             int userID = 1;
@@ -51,12 +51,12 @@ namespace WildcatMicroFund.Controllers
             // Should check to see if a surveyID already exists.   
 
             // Create a new survey 
-            Survey survey = new Survey { SurveyCodeID = surveyCode }; 
+            Survey survey = new Survey { SurveyCodeID = id }; 
             _context.Surveys.Add(survey);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             //Go through every question in survey and create a response 
-            var surveyQuestions = _context.Questions
+            var surveyQuestions = (_context.Questions
 /*                .Include(q => q.DateResponses)
                 .ThenInclude(dr => dr.Response)
                 .Include(q => q.MultipleChoiceResponses)
@@ -64,16 +64,16 @@ namespace WildcatMicroFund.Controllers
                 .Include(q => q.MultipleChoiceResponses)
                 .ThenInclude(mcr => mcr.Response)*/
                 .Include(q => q.QuestionType)
-                .Where(q => q.SurveyCodeID == survey.SurveyCodeID);
+                .Where(q => q.SurveyCodeID == survey.SurveyCodeID)).ToList<Question>();
 
 
 
-                const int dateResponseID = 3;
-                const int multipleChoiceResponseID = 6;
-                const int numericResponseID = 2;
-                const int singleChoiceResponseID = 5;
-                const int textResponseID = 1;
-                const int yesNoResponseID = 4;
+                const int dateResponseID = 4;
+                const int multipleChoiceResponseID = 1;
+                const int numericResponseID = 5;
+                const int singleChoiceResponseID = 2;
+                const int textResponseID = 6;
+                const int yesNoResponseID = 3;
 
 
             foreach (var question in surveyQuestions)
@@ -83,6 +83,7 @@ namespace WildcatMicroFund.Controllers
                 // Create the new response
                 Response response = new Response { SurveyID = survey.ID, UserID = userID, ResponseDate = DateTime.Now };
                 _context.Add(response);
+                _context.SaveChanges();
 
                 // Create the specific response type
 
@@ -115,7 +116,7 @@ namespace WildcatMicroFund.Controllers
                    
                 }
 
-                await _context.SaveChangesAsync();
+               
             }
 
 
