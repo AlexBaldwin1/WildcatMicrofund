@@ -21,7 +21,6 @@
   <ItemGroup>
     <Folder Include="Migrations\" />
     <Folder Include="Views\GenderPOC\" />
-    <Folder Include="Views\This is a test\" />
   </ItemGroup>
 
 
