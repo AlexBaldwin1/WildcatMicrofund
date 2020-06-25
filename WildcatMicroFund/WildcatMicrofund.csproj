@@ -23,11 +23,6 @@
     <Folder Include="Views\GenderPOC\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="wwwroot\Images\WildcatMicrofund_horizontal-01.jpg" />
-    <None Include="wwwroot\Images\WildcatMicrofund_Vertical-02.jpg" />
-  </ItemGroup>
-
 
 
 </Project>
