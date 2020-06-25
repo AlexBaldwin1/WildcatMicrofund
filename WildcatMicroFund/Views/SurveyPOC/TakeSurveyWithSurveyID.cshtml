@@ -16,7 +16,7 @@
 
         @question.QuestionText
 
-        @if (question.QuestionTypeID == 5)
+        @if (question.QuestionTypeID == 2)
         {
             //single choice
             foreach (var choice in question.Choices)
@@ -27,7 +27,7 @@
 
             }
         }
-        else if (question.QuestionTypeID == 6)
+        else if (question.QuestionTypeID == 1)
         {
             //single choice
             foreach (var choice in question.Choices)
@@ -37,7 +37,7 @@
                 @choice.ChoiceText @Html.CheckBox(question.ID.ToString(), choice.ChoiceText)
             }
         }
-        else if (question.QuestionTypeID == 1)
+        else if (question.QuestionTypeID == 6)
         {
             // Text Response
             <br />
@@ -45,21 +45,21 @@
             <input asp-for= "SurveyCode.Questions[1]" />
             @Html.TextArea(question.ID.ToString(), null, new { @class = "form-control" })
         }
-        else if (question.QuestionTypeID == 2)
+        else if (question.QuestionTypeID == 5)
         {
             // numeric Response
             <br />
             <!-- Need to bind the response here-->
             @Html.TextBox(question.ID.ToString(), null, new { @class = "form-control" })
         }
-        else if (question.QuestionTypeID == 3)
+        else if (question.QuestionTypeID == 4)
         {
             // Date Response
             <br />
             <!-- Need to bind the response here-->
             @Html.TextBox(question.ID.ToString(), null, new { @class = "form-control" })
         }
-        else if (question.QuestionTypeID == 4)
+        else if (question.QuestionTypeID == 3)
         {
             // Yes or no
             <br />

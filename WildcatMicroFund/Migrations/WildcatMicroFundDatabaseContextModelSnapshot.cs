@@ -95,16 +95,23 @@ namespace WildcatMicrofund.Migrations
 
             modelBuilder.Entity("WildcatMicroFund.Data.Models.DateResponse", b =>
                 {
-                    b.Property<int>("QuestionID")
-                        .HasColumnType("int");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ResponseID")
+                    b.Property<int>("QuestionID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ResponseDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("QuestionID", "ResponseID");
+                    b.Property<int>("ResponseID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("QuestionID");
 
                     b.HasIndex("ResponseID")
                         .IsUnique();
@@ -146,16 +153,23 @@ namespace WildcatMicrofund.Migrations
 
             modelBuilder.Entity("WildcatMicroFund.Data.Models.MultipleChoiceResponse", b =>
                 {
-                    b.Property<int>("ChoiceID")
-                        .HasColumnType("int");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ResponseID")
+                    b.Property<int?>("ChoiceID")
                         .HasColumnType("int");
 
                     b.Property<int>("QuestionID")
                         .HasColumnType("int");
 
-                    b.HasKey("ChoiceID", "ResponseID", "QuestionID");
+                    b.Property<int>("ResponseID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ChoiceID");
 
                     b.HasIndex("QuestionID");
 
@@ -166,6 +180,11 @@ namespace WildcatMicrofund.Migrations
 
             modelBuilder.Entity("WildcatMicroFund.Data.Models.NumericResponse", b =>
                 {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<int>("QuestionID")
                         .HasColumnType("int");
 
@@ -175,7 +194,9 @@ namespace WildcatMicrofund.Migrations
                     b.Property<int>("ResponseNumber")
                         .HasColumnType("int");
 
-                    b.HasKey("QuestionID", "ResponseID");
+                    b.HasKey("ID");
+
+                    b.HasIndex("QuestionID");
 
                     b.HasIndex("ResponseID")
                         .IsUnique();
@@ -267,16 +288,23 @@ namespace WildcatMicrofund.Migrations
 
             modelBuilder.Entity("WildcatMicroFund.Data.Models.SingleChoiceResponse", b =>
                 {
-                    b.Property<int>("ChoiceID")
-                        .HasColumnType("int");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ResponseID")
+                    b.Property<int?>("ChoiceID")
                         .HasColumnType("int");
 
                     b.Property<int>("QuestionID")
                         .HasColumnType("int");
 
-                    b.HasKey("ChoiceID", "ResponseID", "QuestionID");
+                    b.Property<int>("ResponseID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ChoiceID");
 
                     b.HasIndex("QuestionID");
 
@@ -320,6 +348,11 @@ namespace WildcatMicrofund.Migrations
 
             modelBuilder.Entity("WildcatMicroFund.Data.Models.TextResponse", b =>
                 {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<int>("QuestionID")
                         .HasColumnType("int");
 
@@ -329,7 +362,9 @@ namespace WildcatMicrofund.Migrations
                     b.Property<string>("ResponseText")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("QuestionID", "ResponseID");
+                    b.HasKey("ID");
+
+                    b.HasIndex("QuestionID");
 
                     b.HasIndex("ResponseID")
                         .IsUnique();
@@ -388,13 +423,20 @@ namespace WildcatMicrofund.Migrations
 
             modelBuilder.Entity("WildcatMicroFund.Data.Models.UserBusiness", b =>
                 {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<int>("BusinessID")
                         .HasColumnType("int");
 
                     b.Property<int>("UserID")
                         .HasColumnType("int");
 
-                    b.HasKey("BusinessID", "UserID");
+                    b.HasKey("ID");
+
+                    b.HasIndex("BusinessID");
 
                     b.HasIndex("UserID");
 
@@ -403,21 +445,33 @@ namespace WildcatMicrofund.Migrations
 
             modelBuilder.Entity("WildcatMicroFund.Data.Models.UserRole", b =>
                 {
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("RoleID")
                         .HasColumnType("int");
 
-                    b.HasKey("UserID", "RoleID");
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
 
                     b.HasIndex("RoleID");
+
+                    b.HasIndex("UserID");
 
                     b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("WildcatMicroFund.Data.Models.YesNoResponse", b =>
                 {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<int>("QuestionID")
                         .HasColumnType("int");
 
@@ -427,7 +481,9 @@ namespace WildcatMicrofund.Migrations
                     b.Property<bool>("YesNoResponseValue")
                         .HasColumnType("bit");
 
-                    b.HasKey("QuestionID", "ResponseID");
+                    b.HasKey("ID");
+
+                    b.HasIndex("QuestionID");
 
                     b.HasIndex("ResponseID")
                         .IsUnique();
@@ -470,7 +526,7 @@ namespace WildcatMicrofund.Migrations
                     b.HasOne("WildcatMicroFund.Data.Models.Question", "Question")
                         .WithMany("DateResponses")
                         .HasForeignKey("QuestionID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("WildcatMicroFund.Data.Models.Response", "Response")
@@ -484,20 +540,18 @@ namespace WildcatMicrofund.Migrations
                 {
                     b.HasOne("WildcatMicroFund.Data.Models.Choice", "Choice")
                         .WithMany()
-                        .HasForeignKey("ChoiceID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ChoiceID");
 
                     b.HasOne("WildcatMicroFund.Data.Models.Question", "Question")
                         .WithMany("MultipleChoiceResponses")
                         .HasForeignKey("QuestionID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("WildcatMicroFund.Data.Models.Response", "Response")
                         .WithMany("MultipleChoiceResponses")
                         .HasForeignKey("ResponseID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -544,9 +598,7 @@ namespace WildcatMicrofund.Migrations
                 {
                     b.HasOne("WildcatMicroFund.Data.Models.Choice", "Choice")
                         .WithMany()
-                        .HasForeignKey("ChoiceID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ChoiceID");
 
                     b.HasOne("WildcatMicroFund.Data.Models.Question", "Question")
                         .WithMany("SingleChoiceResponses")

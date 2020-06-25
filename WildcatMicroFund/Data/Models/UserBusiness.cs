@@ -6,7 +6,7 @@ namespace WildcatMicroFund.Data.Models
 {
     public class UserBusiness
     {
-        //int ID { get; set; }
+        public int ID { get; set; }
         public int BusinessID { get; set; }
         public Business Business { get; set; }
         public int UserID { get; set; }
