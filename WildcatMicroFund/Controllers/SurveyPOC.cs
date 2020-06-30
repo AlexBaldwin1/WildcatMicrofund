@@ -141,16 +141,18 @@ namespace WildcatMicroFund.Controllers
                 .ThenInclude(r => r.YesNoResponse)
                 .Where(s => s.ID == survey.ID);
 
+
+
             return View(await surveyContents.FirstOrDefaultAsync<Survey>());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Submit([Bind()] Response response)
+        public async Task<IActionResult> Submit(int id, Survey survey)
         {
-
-
-            return View(response);
+            _context.Add(survey);
+            await _context.SaveChangesAsync();
+            return View(survey);
         }
     }
 }

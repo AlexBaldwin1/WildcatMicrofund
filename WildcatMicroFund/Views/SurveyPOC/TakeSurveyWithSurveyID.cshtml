@@ -1,7 +1,7 @@
 ﻿@model WildcatMicroFund.Data.Models.Survey
 
 
-<!--SurveyPOC Take survey-->
+<!--SurveyPOC with ID test page Take survey-->
 
 <!DOCTYPE html>
 <html>
@@ -10,69 +10,81 @@
     <title>Index</title>
 </head>
 <body>
-
-    @foreach (var question in Model.SurveyCode.Questions)
-    {
-
-        @question.QuestionText
-
-        @if (question.QuestionTypeID == 2)
+    <form asp-action="Submit" asp-controller="SurveyPOC">
+        @foreach (var question in Model.SurveyCode.Questions)
         {
-            //single choice
-            foreach (var choice in question.Choices)
+
+            @question.QuestionText
+
+            @if (question.QuestionTypeID == 2)
             {
+                //single choice
+                foreach (var choice in question.Choices)
+                {
+                    <br />
+                    <!-- Need to bind the response here-->
+
+                    <label>@choice.ChoiceText</label> @Html.RadioButton(question.ID.ToString(), choice.ChoiceText)
+                    @question.ID
+
+
+                }
+            }
+            else if (question.QuestionTypeID == 1)
+            {
+                //Multiple choice
+                foreach (var choice in question.Choices)
+                {
+                    <br />
+                    <!-- Need to bind the response here-->
+                    <!--@*@choice.ChoiceText @Html.CheckBox(question.ID.ToString(), choice.ChoiceText)*@-->
+                    <input type="checkbox" name="@question.ID" value="@choice.ID" />@choice.ChoiceText
+                }
+            }
+            else if (question.QuestionTypeID == 6)
+            {
+                // Text Response
                 <br />
                 <!-- Need to bind the response here-->
-                @choice.ChoiceText @Html.RadioButton(question.ID.ToString(), choice.ChoiceText)
 
+                @Html.TextArea(question.ID.ToString(), null, new { @class = "form-control" })
+                
             }
-        }
-        else if (question.QuestionTypeID == 1)
-        {
-            //single choice
-            foreach (var choice in question.Choices)
+            else if (question.QuestionTypeID == 5)
             {
+                // numeric Response
                 <br />
                 <!-- Need to bind the response here-->
-                @choice.ChoiceText @Html.CheckBox(question.ID.ToString(), choice.ChoiceText)
+                @Html.TextBox(question.ID.ToString(), null, new { @class = "form-control" })
             }
-        }
-        else if (question.QuestionTypeID == 6)
-        {
-            // Text Response
+            else if (question.QuestionTypeID == 4)
+            {
+                // Date Response
+                <br />
+                <!-- Need to bind the response here-->
+
+                @Html.TextBox(question.ID.ToString(), null, new { @class = "form-control" })
+            }
+            else if (question.QuestionTypeID == 3)
+            {
+                // Yes or no
+                <br />
+                <!-- Need to bind the response here-->
+                <p>Yes @Html.RadioButton(question.ID.ToString(), "yes")</p>
+                <p>
+                    No @Html.RadioButton(question.ID.ToString(), "no")
+                </p>
+            }
+
             <br />
-            <!-- Need to bind the response here-->
-            <input asp-for= "SurveyCode.Questions[1]" />
-            @Html.TextArea(question.ID.ToString(), null, new { @class = "form-control" })
-        }
-        else if (question.QuestionTypeID == 5)
-        {
-            // numeric Response
-            <br />
-            <!-- Need to bind the response here-->
-            @Html.TextBox(question.ID.ToString(), null, new { @class = "form-control" })
-        }
-        else if (question.QuestionTypeID == 4)
-        {
-            // Date Response
-            <br />
-            <!-- Need to bind the response here-->
-            @Html.TextBox(question.ID.ToString(), null, new { @class = "form-control" })
-        }
-        else if (question.QuestionTypeID == 3)
-        {
-            // Yes or no
-            <br />
-            <!-- Need to bind the response here-->
-            <p>Yes @Html.RadioButton(question.ID.ToString(), "yes")</p>
-            <p> No @Html.RadioButton(question.ID.ToString(), "no")
-            </p>
+            <hr />
+
         }
 
-        <br />
-        <hr />
+        <input type="submit" />
 
-    }
+
+    </form>
 
 
 </body>
