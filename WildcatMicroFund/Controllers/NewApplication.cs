@@ -10,7 +10,7 @@ namespace WildcatMicroFund.Controllers
     {
         public IActionResult Index()
         {
-            return View("~/Views/Applications/NewApplication.cshtml");
+            return View("~/Views/Administrator/NewApplication.cshtml");
         }
     }
 }

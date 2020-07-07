@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WildcatMicroFund.Controllers
 {
-    public class UsersController : Controller
+    public class Cohort : Controller
     {
         public IActionResult Index()
         {
-            return View("~/Views/Administrator/AdminUserEdit.cshtml");
+            return View("~/Views/Administrator/BuildCohort.cshtml");
         }
     }
 }
