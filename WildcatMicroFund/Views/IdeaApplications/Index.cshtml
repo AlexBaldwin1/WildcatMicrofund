@@ -1,0 +1,131 @@
+﻿@model IEnumerable<WildcatMicroFund.Data.Models.IdeaApplication>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Concept)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ConceptStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalesGenerated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalesGeneratedInformation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BusinessStage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BusinessIdeaDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HasPrototypeOrIntellectualProperty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrototypeDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BusinessType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MarketOpportunity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EvidenceOfViableOpportunity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MarketingAndSales)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BusinessCosts)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompetitionDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TeamDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpecificRequest)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Concept)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConceptStatus.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SalesGenerated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SalesGeneratedInformation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BusinessStage.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BusinessIdeaDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HasPrototypeOrIntellectualProperty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrototypeDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BusinessType.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MarketOpportunity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EvidenceOfViableOpportunity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MarketingAndSales)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BusinessCosts)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompetitionDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TeamDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpecificRequest)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

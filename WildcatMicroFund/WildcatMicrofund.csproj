@@ -20,7 +20,10 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Views\Applications\" />
     <Folder Include="Views\GenderPOC\" />
+    <Folder Include="Views\Reports\" />
+    <Folder Include="Views\Users\" />
   </ItemGroup>
 
 
