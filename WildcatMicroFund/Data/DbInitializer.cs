@@ -161,7 +161,9 @@ namespace WildcatMicroFund.Data
                     new Role{ RoleDescription="Admin"},
                     new Role{ RoleDescription="Intern"},
                     new Role{ RoleDescription="Mentor"},
-                    new Role{ RoleDescription="Applicant"}
+                    new Role{ RoleDescription="Applicant"},
+                    new Role{ RoleDescription="Judge"},
+                    new Role{ RoleDescription="Manager"}
 
                  };
                 foreach (Role r in roles)
