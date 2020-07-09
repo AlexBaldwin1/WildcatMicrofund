@@ -75,6 +75,28 @@ namespace WildcatMicroFund.Data
                 context.SaveChanges();
             }
 
+            if (!context.ApplicationStatuses.Any())
+            {
+                var applicationStatuses = new ApplicationStatus[]
+                {
+                    new ApplicationStatus{Description = "Applicantion in work"},
+                    new ApplicationStatus{Description = "Application Approved"},
+                    new ApplicationStatus{Description = "Business assigned to mentor"},
+                    new ApplicationStatus{Description = "Mentor approved for grant review"},
+                    new ApplicationStatus{Description = "Grant review in progrss"},
+                    new ApplicationStatus{Description = "Business 'In Process' of using funds"},
+                    new ApplicationStatus{Description = "Business in round 2+"},
+                    new ApplicationStatus{Description = "Business exited from WMF"},
+
+
+                };
+
+                foreach (ApplicationStatus a in applicationStatuses)
+                {
+                    context.ApplicationStatuses.Add(a);
+                }
+                context.SaveChanges();
+            }
 
 
 
@@ -139,7 +161,9 @@ namespace WildcatMicroFund.Data
                     new Role{ RoleDescription="Admin"},
                     new Role{ RoleDescription="Intern"},
                     new Role{ RoleDescription="Mentor"},
-                    new Role{ RoleDescription="Applicant"}
+                    new Role{ RoleDescription="Applicant"},
+                    new Role{ RoleDescription="Judge"},
+                    new Role{ RoleDescription="Manager"}
 
                  };
                 foreach (Role r in roles)
