@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ViewModels\SurveyModels\**" />
+    <Content Remove="ViewModels\SurveyModels\**" />
+    <EmbeddedResource Remove="ViewModels\SurveyModels\**" />
+    <None Remove="ViewModels\SurveyModels\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -20,6 +27,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="ViewModels\" />
     <Folder Include="Views\GenderPOC\" />
   </ItemGroup>
 
