@@ -25,9 +25,11 @@ namespace WildcatMicroFund.Data.Models
         public IdeaApplication IdeaApplication { get; set; }
         public int IdeaApplicationID { get; set; }
 
-        //TODO a table for statuses
         [DisplayName("Status of application")]
-        public string ApplicationStatus { get; set; }
+        public string ApplicationStatusID { get; set; }
+        public ApplicationStatus ApplicationStatus { get; set; }
+
+
 
         
 

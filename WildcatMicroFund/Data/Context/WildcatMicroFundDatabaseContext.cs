@@ -27,6 +27,7 @@ namespace WildcatMicroFund.Data.Context
         public DbSet<ConceptStatus> ConceptStatuses { get; set; }
         public DbSet<Gender> Genders { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<ApplicationStatus> ApplicationStatuses { get; set; }
 
 
 
