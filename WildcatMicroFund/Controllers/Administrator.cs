@@ -33,14 +33,28 @@ namespace WildcatMicroFund.Controllers
 
         public async Task<IActionResult> Users()
         {
+
+            /*            if (id == null)
+                        {
+                            return NotFound();
+                        }*/
+
+
             var user = _context.Users;
-/*
-                .Include(u => u.FirstName)
-                .Include(u => u.Email)
-                .Include(u => u.UserRoles);*/
+                //.Include(u => u.UserRoles);
 
-                return View(user);
+/*            if (user == null)
+            {
+                return NotFound();
+            }*/
 
+            return View(user);
+
+        }
+
+        public async Task<IActionResult> Assign()
+        {
+            return View();
         }
     }
 }

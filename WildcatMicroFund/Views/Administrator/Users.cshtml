@@ -33,10 +33,13 @@
 
         <table>
             <tr>
-                <th>@Html.DisplayNameFor(model => model.FirstName)</th>
+@*                <th>@Html.DisplayNameFor(model => model.FirstName)</th>
                 <th>@Html.DisplayNameFor(model => model.UserRoles)</th>
-                <th>@Html.DisplayNameFor(model => model.Email)</th>
-                <th>Edit User</th>
+                <th>@Html.DisplayNameFor(model => model.Email)</th>*@
+                <th>First Name</th>
+                <th>User Role</th>
+                <th>User Email</th>
+                <th>Assign User Role</th>
             </tr>
             <tbody>
     @foreach (var item in Model) {
@@ -49,6 +52,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                <a asp-controller="Administrator" asp-action="Assign">Assign User Role</a>
             </td>
         </tr>
     }
