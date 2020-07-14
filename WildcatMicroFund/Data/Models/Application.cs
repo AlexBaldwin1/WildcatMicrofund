@@ -22,8 +22,9 @@ namespace WildcatMicroFund.Data.Models
         public bool AttendedWorkshop { get; set; }
         [DisplayName("Date of decision")]
         public DateTime DateOfDecision { get; set; }
-        public IdeaApplication IdeaApplication { get; set; }
-        public int IdeaApplicationID { get; set; }
+
+        public ApplicationApplicationDetail ApplicationApplicationDetail { get; set; }
+        public int ApplicationApplicationDetailID { get; set; }
 
         [DisplayName("Status of application")]
         public string ApplicationStatusID { get; set; }

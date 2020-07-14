@@ -8,16 +8,16 @@ namespace WildcatMicrofund.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Businesses",
+                name: "ApplicationStatuses",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BusinessName = table.Column<string>(nullable: true)
+                    Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Businesses", x => x.ID);
+                    table.PrimaryKey("PK_ApplicationStatuses", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -99,7 +99,7 @@ namespace WildcatMicrofund.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "IdeaApplications",
+                name: "ApplicationDetails",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -124,21 +124,21 @@ namespace WildcatMicrofund.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_IdeaApplications", x => x.ID);
+                    table.PrimaryKey("PK_ApplicationDetails", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_IdeaApplications_BusinessStages_BusinessStageID",
+                        name: "FK_ApplicationDetails_BusinessStages_BusinessStageID",
                         column: x => x.BusinessStageID,
                         principalTable: "BusinessStages",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_IdeaApplications_BusinessTypes_BusinessTypeID",
+                        name: "FK_ApplicationDetails_BusinessTypes_BusinessTypeID",
                         column: x => x.BusinessTypeID,
                         principalTable: "BusinessTypes",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_IdeaApplications_ConceptStatuses_ConceptStatusID",
+                        name: "FK_ApplicationDetails_ConceptStatuses_ConceptStatusID",
                         column: x => x.ConceptStatusID,
                         principalTable: "ConceptStatuses",
                         principalColumn: "ID",
@@ -180,6 +180,72 @@ namespace WildcatMicrofund.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ApplicationApplicationDetails",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DateChange = table.Column<DateTime>(nullable: false),
+                    ApplicationDetailID = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ApplicationApplicationDetails", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_ApplicationApplicationDetails_ApplicationDetails_ApplicationDetailID",
+                        column: x => x.ApplicationDetailID,
+                        principalTable: "ApplicationDetails",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Businesses",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BusinessName = table.Column<string>(nullable: true),
+                    MentorID = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Businesses", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Businesses_Users_MentorID",
+                        column: x => x.MentorID,
+                        principalTable: "Users",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserRoles",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserID = table.Column<int>(nullable: false),
+                    RoleID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRoles", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_UserRoles_Roles_RoleID",
+                        column: x => x.RoleID,
+                        principalTable: "Roles",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserRoles_Users_UserID",
+                        column: x => x.UserID,
+                        principalTable: "Users",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Applications",
                 columns: table => new
                 {
@@ -190,22 +256,29 @@ namespace WildcatMicrofund.Migrations
                     DateApplied = table.Column<DateTime>(nullable: false),
                     AttendedWorkshop = table.Column<bool>(nullable: false),
                     DateOfDecision = table.Column<DateTime>(nullable: false),
-                    IdeaApplicationID = table.Column<int>(nullable: false),
-                    ApplicationStatus = table.Column<string>(nullable: true)
+                    ApplicationApplicationDetailID = table.Column<int>(nullable: false),
+                    ApplicationStatusID = table.Column<string>(nullable: true),
+                    ApplicationStatusID1 = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Applications", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Applications_Businesses_BusinessID",
-                        column: x => x.BusinessID,
-                        principalTable: "Businesses",
+                        name: "FK_Applications_ApplicationApplicationDetails_ApplicationApplicationDetailID",
+                        column: x => x.ApplicationApplicationDetailID,
+                        principalTable: "ApplicationApplicationDetails",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Applications_IdeaApplications_IdeaApplicationID",
-                        column: x => x.IdeaApplicationID,
-                        principalTable: "IdeaApplications",
+                        name: "FK_Applications_ApplicationStatuses_ApplicationStatusID1",
+                        column: x => x.ApplicationStatusID1,
+                        principalTable: "ApplicationStatuses",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Applications_Businesses_BusinessID",
+                        column: x => x.BusinessID,
+                        principalTable: "Businesses",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -242,31 +315,35 @@ namespace WildcatMicrofund.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "UserRoles",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserID = table.Column<int>(nullable: false),
-                    RoleID = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserRoles", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_UserRoles_Roles_RoleID",
-                        column: x => x.RoleID,
-                        principalTable: "Roles",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserRoles_Users_UserID",
-                        column: x => x.UserID,
-                        principalTable: "Users",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicationApplicationDetails_ApplicationDetailID",
+                table: "ApplicationApplicationDetails",
+                column: "ApplicationDetailID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicationDetails_BusinessStageID",
+                table: "ApplicationDetails",
+                column: "BusinessStageID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicationDetails_BusinessTypeID",
+                table: "ApplicationDetails",
+                column: "BusinessTypeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicationDetails_ConceptStatusID",
+                table: "ApplicationDetails",
+                column: "ConceptStatusID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Applications_ApplicationApplicationDetailID",
+                table: "Applications",
+                column: "ApplicationApplicationDetailID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Applications_ApplicationStatusID1",
+                table: "Applications",
+                column: "ApplicationStatusID1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Applications_BusinessID",
@@ -274,29 +351,14 @@ namespace WildcatMicrofund.Migrations
                 column: "BusinessID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Applications_IdeaApplicationID",
-                table: "Applications",
-                column: "IdeaApplicationID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Applications_UserID",
                 table: "Applications",
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_IdeaApplications_BusinessStageID",
-                table: "IdeaApplications",
-                column: "BusinessStageID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_IdeaApplications_BusinessTypeID",
-                table: "IdeaApplications",
-                column: "BusinessTypeID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_IdeaApplications_ConceptStatusID",
-                table: "IdeaApplications",
-                column: "ConceptStatusID");
+                name: "IX_Businesses_MentorID",
+                table: "Businesses",
+                column: "MentorID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserBusinesses_BusinessID",
@@ -341,13 +403,19 @@ namespace WildcatMicrofund.Migrations
                 name: "UserRoles");
 
             migrationBuilder.DropTable(
-                name: "IdeaApplications");
+                name: "ApplicationApplicationDetails");
+
+            migrationBuilder.DropTable(
+                name: "ApplicationStatuses");
 
             migrationBuilder.DropTable(
                 name: "Businesses");
 
             migrationBuilder.DropTable(
                 name: "Roles");
+
+            migrationBuilder.DropTable(
+                name: "ApplicationDetails");
 
             migrationBuilder.DropTable(
                 name: "Users");

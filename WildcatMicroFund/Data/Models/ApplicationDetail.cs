@@ -9,7 +9,7 @@ using WildcatMicroFund.Data.Models;
 
 namespace WildcatMicroFund.Data.Models
 {
-    public class IdeaApplication
+    public class ApplicationDetail
     {
 
         

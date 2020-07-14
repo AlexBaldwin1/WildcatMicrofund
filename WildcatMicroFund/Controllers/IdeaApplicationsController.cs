@@ -22,7 +22,7 @@ namespace WildcatMicroFund.Views
         // GET: IdeaApplications
         public async Task<IActionResult> Index()
         {
-            var wildcatMicroFundDatabaseContext = _context.IdeaApplications.Include(i => i.BusinessStage).Include(i => i.BusinessType).Include(i => i.ConceptStatus);
+            var wildcatMicroFundDatabaseContext = _context.ApplicationDetails.Include(i => i.BusinessStage).Include(i => i.BusinessType).Include(i => i.ConceptStatus);
             return View(await wildcatMicroFundDatabaseContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace WildcatMicroFund.Views
                 return NotFound();
             }
 
-            var ideaApplication = await _context.IdeaApplications
+            var ideaApplication = await _context.ApplicationDetails
                 .Include(i => i.BusinessStage)
                 .Include(i => i.BusinessType)
                 .Include(i => i.ConceptStatus)
@@ -61,7 +61,7 @@ namespace WildcatMicroFund.Views
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Concept,ConceptStatusID,SalesGenerated,SalesGeneratedInformation,BusinessStageID,BusinessIdeaDescription,HasPrototypeOrIntellectualProperty,PrototypeDescription,BusinessTypeID,MarketOpportunity,EvidenceOfViableOpportunity,CustomerDescription,MarketingAndSales,BusinessCosts,CompetitionDescription,TeamDescription,SpecificRequest")] IdeaApplication ideaApplication)
+        public async Task<IActionResult> Create([Bind("ID,Concept,ConceptStatusID,SalesGenerated,SalesGeneratedInformation,BusinessStageID,BusinessIdeaDescription,HasPrototypeOrIntellectualProperty,PrototypeDescription,BusinessTypeID,MarketOpportunity,EvidenceOfViableOpportunity,CustomerDescription,MarketingAndSales,BusinessCosts,CompetitionDescription,TeamDescription,SpecificRequest")] ApplicationDetail ideaApplication)
         {
             if (ModelState.IsValid)
             {
@@ -83,7 +83,7 @@ namespace WildcatMicroFund.Views
                 return NotFound();
             }
 
-            var ideaApplication = await _context.IdeaApplications.FindAsync(id);
+            var ideaApplication = await _context.ApplicationDetails.FindAsync(id);
             if (ideaApplication == null)
             {
                 return NotFound();
@@ -99,7 +99,7 @@ namespace WildcatMicroFund.Views
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Concept,ConceptStatusID,SalesGenerated,SalesGeneratedInformation,BusinessStageID,BusinessIdeaDescription,HasPrototypeOrIntellectualProperty,PrototypeDescription,BusinessTypeID,MarketOpportunity,EvidenceOfViableOpportunity,CustomerDescription,MarketingAndSales,BusinessCosts,CompetitionDescription,TeamDescription,SpecificRequest")] IdeaApplication ideaApplication)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Concept,ConceptStatusID,SalesGenerated,SalesGeneratedInformation,BusinessStageID,BusinessIdeaDescription,HasPrototypeOrIntellectualProperty,PrototypeDescription,BusinessTypeID,MarketOpportunity,EvidenceOfViableOpportunity,CustomerDescription,MarketingAndSales,BusinessCosts,CompetitionDescription,TeamDescription,SpecificRequest")] ApplicationDetail ideaApplication)
         {
             if (id != ideaApplication.ID)
             {
@@ -140,7 +140,7 @@ namespace WildcatMicroFund.Views
                 return NotFound();
             }
 
-            var ideaApplication = await _context.IdeaApplications
+            var ideaApplication = await _context.ApplicationDetails
                 .Include(i => i.BusinessStage)
                 .Include(i => i.BusinessType)
                 .Include(i => i.ConceptStatus)
@@ -158,15 +158,15 @@ namespace WildcatMicroFund.Views
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var ideaApplication = await _context.IdeaApplications.FindAsync(id);
-            _context.IdeaApplications.Remove(ideaApplication);
+            var ideaApplication = await _context.ApplicationDetails.FindAsync(id);
+            _context.ApplicationDetails.Remove(ideaApplication);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool IdeaApplicationExists(int id)
         {
-            return _context.IdeaApplications.Any(e => e.ID == id);
+            return _context.ApplicationDetails.Any(e => e.ID == id);
         }
     }
 }

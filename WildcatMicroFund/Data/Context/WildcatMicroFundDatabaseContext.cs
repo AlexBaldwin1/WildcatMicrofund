@@ -21,7 +21,10 @@ namespace WildcatMicroFund.Data.Context
         public DbSet<UserRole> UserRoles { get; set; }    
         public DbSet<UserBusiness> UserBusinesses { get; set; }
         public DbSet<Ethnicity> Ethnicities { get; set; }
-        public DbSet<IdeaApplication> IdeaApplications { get; set; }
+
+
+        public DbSet<ApplicationDetail> ApplicationDetails { get; set; }
+        public DbSet<ApplicationApplicationDetail> ApplicationApplicationDetails { get; set; }
         public DbSet<BusinessStage> BusinessStages { get; set; }
         public DbSet<BusinessType> BusinessTypes { get; set; }
         public DbSet<ConceptStatus> ConceptStatuses { get; set; }

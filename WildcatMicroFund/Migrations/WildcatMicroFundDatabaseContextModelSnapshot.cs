@@ -26,6 +26,9 @@ namespace WildcatMicrofund.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ApplicationApplicationDetailID")
+                        .HasColumnType("int");
+
                     b.Property<string>("ApplicationStatusID")
                         .HasColumnType("nvarchar(max)");
 
@@ -44,23 +47,109 @@ namespace WildcatMicrofund.Migrations
                     b.Property<DateTime>("DateOfDecision")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IdeaApplicationID")
-                        .HasColumnType("int");
-
                     b.Property<int>("UserID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
 
+                    b.HasIndex("ApplicationApplicationDetailID");
+
                     b.HasIndex("ApplicationStatusID1");
 
                     b.HasIndex("BusinessID");
 
-                    b.HasIndex("IdeaApplicationID");
-
                     b.HasIndex("UserID");
 
                     b.ToTable("Applications");
+                });
+
+            modelBuilder.Entity("WildcatMicroFund.Data.Models.ApplicationApplicationDetail", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ApplicationDetailID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateChange")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ApplicationDetailID");
+
+                    b.ToTable("ApplicationApplicationDetails");
+                });
+
+            modelBuilder.Entity("WildcatMicroFund.Data.Models.ApplicationDetail", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("BusinessCosts")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BusinessIdeaDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("BusinessStageID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BusinessTypeID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CompetitionDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Concept")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ConceptStatusID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CustomerDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EvidenceOfViableOpportunity")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("HasPrototypeOrIntellectualProperty")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MarketOpportunity")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MarketingAndSales")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PrototypeDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("SalesGenerated")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SalesGeneratedInformation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SpecificRequest")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TeamDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("BusinessStageID");
+
+                    b.HasIndex("BusinessTypeID");
+
+                    b.HasIndex("ConceptStatusID");
+
+                    b.ToTable("ApplicationDetails");
                 });
 
             modelBuilder.Entity("WildcatMicroFund.Data.Models.ApplicationStatus", b =>
@@ -175,75 +264,6 @@ namespace WildcatMicrofund.Migrations
                     b.ToTable("Genders");
                 });
 
-            modelBuilder.Entity("WildcatMicroFund.Data.Models.IdeaApplication", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("BusinessCosts")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BusinessIdeaDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("BusinessStageID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BusinessTypeID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CompetitionDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Concept")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ConceptStatusID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CustomerDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EvidenceOfViableOpportunity")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("HasPrototypeOrIntellectualProperty")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MarketOpportunity")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MarketingAndSales")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PrototypeDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("SalesGenerated")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SalesGeneratedInformation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SpecificRequest")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TeamDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("BusinessStageID");
-
-                    b.HasIndex("BusinessTypeID");
-
-                    b.HasIndex("ConceptStatusID");
-
-                    b.ToTable("IdeaApplications");
-                });
-
             modelBuilder.Entity("WildcatMicroFund.Data.Models.Role", b =>
                 {
                     b.Property<int>("ID")
@@ -354,6 +374,12 @@ namespace WildcatMicrofund.Migrations
 
             modelBuilder.Entity("WildcatMicroFund.Data.Models.Application", b =>
                 {
+                    b.HasOne("WildcatMicroFund.Data.Models.ApplicationApplicationDetail", "ApplicationApplicationDetail")
+                        .WithMany()
+                        .HasForeignKey("ApplicationApplicationDetailID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("WildcatMicroFund.Data.Models.ApplicationStatus", "ApplicationStatus")
                         .WithMany()
                         .HasForeignKey("ApplicationStatusID1");
@@ -364,12 +390,6 @@ namespace WildcatMicrofund.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WildcatMicroFund.Data.Models.IdeaApplication", "IdeaApplication")
-                        .WithMany()
-                        .HasForeignKey("IdeaApplicationID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("WildcatMicroFund.Data.Models.User", "User")
                         .WithMany("Applications")
                         .HasForeignKey("UserID")
@@ -377,14 +397,14 @@ namespace WildcatMicrofund.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WildcatMicroFund.Data.Models.Business", b =>
+            modelBuilder.Entity("WildcatMicroFund.Data.Models.ApplicationApplicationDetail", b =>
                 {
-                    b.HasOne("WildcatMicroFund.Data.Models.User", "Mentor")
+                    b.HasOne("WildcatMicroFund.Data.Models.ApplicationDetail", "ApplicationDetail")
                         .WithMany()
-                        .HasForeignKey("MentorID");
+                        .HasForeignKey("ApplicationDetailID");
                 });
 
-            modelBuilder.Entity("WildcatMicroFund.Data.Models.IdeaApplication", b =>
+            modelBuilder.Entity("WildcatMicroFund.Data.Models.ApplicationDetail", b =>
                 {
                     b.HasOne("WildcatMicroFund.Data.Models.BusinessStage", "BusinessStage")
                         .WithMany()
@@ -403,6 +423,13 @@ namespace WildcatMicrofund.Migrations
                         .HasForeignKey("ConceptStatusID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("WildcatMicroFund.Data.Models.Business", b =>
+                {
+                    b.HasOne("WildcatMicroFund.Data.Models.User", "Mentor")
+                        .WithMany()
+                        .HasForeignKey("MentorID");
                 });
 
             modelBuilder.Entity("WildcatMicroFund.Data.Models.User", b =>
