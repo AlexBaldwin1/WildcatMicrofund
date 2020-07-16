@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WildcatMicroFund.Data.Context;
 
 namespace WildcatMicrofund.Migrations
 {
     [DbContext(typeof(WildcatMicroFundDatabaseContext))]
-    partial class WildcatMicroFundDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200716023551_AllowNullOnFieldsInApplication")]
+    partial class AllowNullOnFieldsInApplication
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,16 +39,16 @@ namespace WildcatMicrofund.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
-                    b.Property<int?>("BusinessID")
+                    b.Property<int>("BusinessID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateApplied")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateOfDecision")
+                    b.Property<DateTime>("DateOfDecision")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("UserID")
+                    b.Property<int>("UserID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
@@ -365,11 +367,15 @@ namespace WildcatMicrofund.Migrations
 
                     b.HasOne("WildcatMicroFund.Data.Models.Business", "Business")
                         .WithMany("Applications")
-                        .HasForeignKey("BusinessID");
+                        .HasForeignKey("BusinessID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("WildcatMicroFund.Data.Models.User", "User")
                         .WithMany("Applications")
-                        .HasForeignKey("UserID");
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("WildcatMicroFund.Data.Models.ApplicationDetail", b =>

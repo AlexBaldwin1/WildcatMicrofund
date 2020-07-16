@@ -24,7 +24,6 @@ namespace WildcatMicroFund.Data.Context
 
 
         public DbSet<ApplicationDetail> ApplicationDetails { get; set; }
-        public DbSet<ApplicationApplicationDetail> ApplicationApplicationDetails { get; set; }
         public DbSet<BusinessStage> BusinessStages { get; set; }
         public DbSet<BusinessType> BusinessTypes { get; set; }
         public DbSet<ConceptStatus> ConceptStatuses { get; set; }
@@ -36,8 +35,10 @@ namespace WildcatMicroFund.Data.Context
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {          
-             
+        {
+            modelBuilder.Entity<Application>()
+               .Property(a => a.AttendedWorkshop)
+               .HasDefaultValue(false);
         }
 
 

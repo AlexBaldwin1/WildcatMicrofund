@@ -10,23 +10,23 @@ using WildcatMicroFund.Data.Models;
 
 namespace WildcatMicroFund.Views
 {
-    public class IdeaApplicationsController : Controller
+    public class ApplicationsController : Controller
     {
         private readonly WildcatMicroFundDatabaseContext _context;
 
-        public IdeaApplicationsController(WildcatMicroFundDatabaseContext context)
+        public ApplicationsController(WildcatMicroFundDatabaseContext context)
         {
             _context = context;
         }
 
-        // GET: IdeaApplications
+        // GET: Applications
         public async Task<IActionResult> Index()
         {
             var wildcatMicroFundDatabaseContext = _context.ApplicationDetails.Include(i => i.BusinessStage).Include(i => i.BusinessType).Include(i => i.ConceptStatus);
             return View(await wildcatMicroFundDatabaseContext.ToListAsync());
         }
 
-        // GET: IdeaApplications/Details/5
+        // GET: Applications/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,7 +47,7 @@ namespace WildcatMicroFund.Views
             return View(ideaApplication);
         }
 
-        // GET: IdeaApplications/Create
+        // GET: Applications/Create
         public IActionResult Create()
         {
             ViewData["BusinessStageID"] = new SelectList(_context.BusinessStages, "ID", "BusinessStageDescription");
@@ -56,26 +56,47 @@ namespace WildcatMicroFund.Views
             return View();
         }
 
-        // POST: IdeaApplications/Create
+        // POST: Applications/Create
+        // Create a new application
+
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Concept,ConceptStatusID,SalesGenerated,SalesGeneratedInformation,BusinessStageID,BusinessIdeaDescription,HasPrototypeOrIntellectualProperty,PrototypeDescription,BusinessTypeID,MarketOpportunity,EvidenceOfViableOpportunity,CustomerDescription,MarketingAndSales,BusinessCosts,CompetitionDescription,TeamDescription,SpecificRequest")] ApplicationDetail ideaApplication)
+        public async Task<IActionResult> Create([Bind("ID,Concept,ConceptStatusID,SalesGenerated,SalesGeneratedInformation,BusinessStageID,BusinessIdeaDescription,HasPrototypeOrIntellectualProperty,PrototypeDescription,BusinessTypeID,MarketOpportunity,EvidenceOfViableOpportunity,CustomerDescription,MarketingAndSales,BusinessCosts,CompetitionDescription,TeamDescription,SpecificRequest")] ApplicationDetail applicationDetail)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(ideaApplication);
+                // Create the Application
+                Application application = new Application();
+                application.DateApplied = DateTime.Now;
+                var applicationStatus = _context.ApplicationStatuses
+                    .Where(a => a.Description == "Applicantion in work").FirstOrDefault<ApplicationStatus>();
+                application.ApplicationStatus = applicationStatus;
+
+
+                // Add Date to applicationDetails
+                applicationDetail.DateChanged = DateTime.Now;
+                
+                // Add the rows to the database.
+                _context.Add(application);
                 await _context.SaveChangesAsync();
+                applicationDetail.Application = application;
+                _context.Add(applicationDetail);
+
+
+                // _context.Applications.Add(application);
+                await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BusinessStageID"] = new SelectList(_context.BusinessStages, "ID", "BusinessStageDescription", ideaApplication.BusinessStageID);
-            ViewData["BusinessTypeID"] = new SelectList(_context.BusinessTypes, "ID", "BusinessTypeDescription", ideaApplication.BusinessTypeID);
-            ViewData["ConceptStatusID"] = new SelectList(_context.ConceptStatuses, "ID", "ConceptStatusDescription", ideaApplication.ConceptStatusID);
-            return View(ideaApplication);
+            ViewData["BusinessStageID"] = new SelectList(_context.BusinessStages, "ID", "BusinessStageDescription", applicationDetail.BusinessStageID);
+            ViewData["BusinessTypeID"] = new SelectList(_context.BusinessTypes, "ID", "BusinessTypeDescription", applicationDetail.BusinessTypeID);
+            ViewData["ConceptStatusID"] = new SelectList(_context.ConceptStatuses, "ID", "ConceptStatusDescription", applicationDetail.ConceptStatusID);
+            return View(applicationDetail);
         }
 
-        // GET: IdeaApplications/Edit/5
+        // GET: Applications/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -94,14 +115,15 @@ namespace WildcatMicroFund.Views
             return View(ideaApplication);
         }
 
-        // POST: IdeaApplications/Edit/5
+        // POST: Applications/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Concept,ConceptStatusID,SalesGenerated,SalesGeneratedInformation,BusinessStageID,BusinessIdeaDescription,HasPrototypeOrIntellectualProperty,PrototypeDescription,BusinessTypeID,MarketOpportunity,EvidenceOfViableOpportunity,CustomerDescription,MarketingAndSales,BusinessCosts,CompetitionDescription,TeamDescription,SpecificRequest")] ApplicationDetail ideaApplication)
+        public async Task<IActionResult> Edit(int id, 
+            [Bind("ID,Concept,ConceptStatusID,SalesGenerated,SalesGeneratedInformation,BusinessStageID,BusinessIdeaDescription,HasPrototypeOrIntellectualProperty,PrototypeDescription,BusinessTypeID,MarketOpportunity,EvidenceOfViableOpportunity,CustomerDescription,MarketingAndSales,BusinessCosts,CompetitionDescription,TeamDescription,SpecificRequest")] ApplicationDetail applicationDetail)
         {
-            if (id != ideaApplication.ID)
+            if (id != applicationDetail.ID)
             {
                 return NotFound();
             }
@@ -110,12 +132,16 @@ namespace WildcatMicroFund.Views
             {
                 try
                 {
-                    _context.Update(ideaApplication);
+
+                    
+
+                    _context.ApplicationDetails.Add(applicationDetail);
+                    
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!IdeaApplicationExists(ideaApplication.ID))
+                    if (!IdeaApplicationExists(applicationDetail.ID))
                     {
                         return NotFound();
                     }
@@ -126,13 +152,13 @@ namespace WildcatMicroFund.Views
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BusinessStageID"] = new SelectList(_context.BusinessStages, "ID", "BusinessStageDescription", ideaApplication.BusinessStageID);
-            ViewData["BusinessTypeID"] = new SelectList(_context.BusinessTypes, "ID", "BusinessTypeDescription", ideaApplication.BusinessTypeID);
-            ViewData["ConceptStatusID"] = new SelectList(_context.ConceptStatuses, "ID", "ConceptStatusDescription", ideaApplication.ConceptStatusID);
-            return View(ideaApplication);
+            ViewData["BusinessStageID"] = new SelectList(_context.BusinessStages, "ID", "BusinessStageDescription", applicationDetail.BusinessStageID);
+            ViewData["BusinessTypeID"] = new SelectList(_context.BusinessTypes, "ID", "BusinessTypeDescription", applicationDetail.BusinessTypeID);
+            ViewData["ConceptStatusID"] = new SelectList(_context.ConceptStatuses, "ID", "ConceptStatusDescription", applicationDetail.ConceptStatusID);
+            return View(applicationDetail);
         }
 
-        // GET: IdeaApplications/Delete/5
+        // GET: Applications/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -153,13 +179,14 @@ namespace WildcatMicroFund.Views
             return View(ideaApplication);
         }
 
-        // POST: IdeaApplications/Delete/5
+        // POST: Applications/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var ideaApplication = await _context.ApplicationDetails.FindAsync(id);
-            _context.ApplicationDetails.Remove(ideaApplication);
+
+
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

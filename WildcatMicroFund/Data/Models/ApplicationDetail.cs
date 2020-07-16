@@ -14,7 +14,15 @@ namespace WildcatMicroFund.Data.Models
 
         
         public int ID { get; set; }
-        
+                
+
+        // Link back to the application
+        public int ApplicationID { get; set; }
+        public Application Application { get; set; }
+
+        // Date that is set to when the application was created or updated.
+        public DateTime DateChanged { get; set; }
+
         [DisplayName("The name of your concept.")]
         public string Concept { get; set; }
         
