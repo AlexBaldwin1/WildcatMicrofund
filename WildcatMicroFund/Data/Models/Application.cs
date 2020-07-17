@@ -10,7 +10,7 @@ namespace WildcatMicroFund.Data.Models
     public class Application
     {
 
-        // This model will link the IdeaApplication to the user and business. 
+        // This model will link the Application and ApplicationDetails to the user and business. 
         // This model will also contain the information about the status.
         public int ID { get; set; }
         
@@ -18,11 +18,14 @@ namespace WildcatMicroFund.Data.Models
         public Business Business { get; set; }
         public int? BusinessID { get; set; }
 
+        // The user that created the application
         [AllowNull]
         public int? UserID { get; set; }
-        
         [AllowNull]
         public User User { get; set; }
+
+
+        // Date the application was started
         [DisplayName("Date of application")]
         public DateTime DateApplied { get; set; }
         [DisplayName("Was a workshop attended")]

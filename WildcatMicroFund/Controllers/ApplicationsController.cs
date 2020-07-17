@@ -57,7 +57,7 @@ namespace WildcatMicroFund.Views
         }
 
         // POST: Applications/Create
-        // Create a new application
+        // Create a new application and application details.
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -118,23 +118,30 @@ namespace WildcatMicroFund.Views
         // POST: Applications/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        // This will save a new application details to the database with a new date changed so old applications are saved.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, 
-            [Bind("ID,Concept,ConceptStatusID,SalesGenerated,SalesGeneratedInformation,BusinessStageID,BusinessIdeaDescription,HasPrototypeOrIntellectualProperty,PrototypeDescription,BusinessTypeID,MarketOpportunity,EvidenceOfViableOpportunity,CustomerDescription,MarketingAndSales,BusinessCosts,CompetitionDescription,TeamDescription,SpecificRequest")] ApplicationDetail applicationDetail)
+            [Bind("Concept,ConceptStatusID,SalesGenerated,SalesGeneratedInformation,BusinessStageID,BusinessIdeaDescription,HasPrototypeOrIntellectualProperty,PrototypeDescription,BusinessTypeID,MarketOpportunity,EvidenceOfViableOpportunity,CustomerDescription,MarketingAndSales,BusinessCosts,CompetitionDescription,TeamDescription,SpecificRequest")] ApplicationDetail applicationDetail)
         {
-            if (id != applicationDetail.ID)
+            /*if (id != applicationDetail.ID)
             {
                 return NotFound();
-            }
+            }*/
 
             if (ModelState.IsValid)
             {
                 try
                 {
+                    // find the application to connect it to.
+                    var oldApplicationDetails = _context.ApplicationDetails
+                        .Where(ad => ad.ID == id).FirstOrDefault<ApplicationDetail>();
 
-                    
-
+                    // Connect the new applicationDetail to the existing application.
+                    applicationDetail.Application = oldApplicationDetails.Application;
+                    applicationDetail.ApplicationID = oldApplicationDetails.ApplicationID;
+                    applicationDetail.DateChanged = DateTime.Now;
                     _context.ApplicationDetails.Add(applicationDetail);
                     
                     await _context.SaveChangesAsync();
