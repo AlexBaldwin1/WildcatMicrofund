@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -70,7 +71,22 @@ namespace WildcatMicroFund.Controllers
         {
             if (ModelState.IsValid)
             {
+                UserRole userRoleApp = new UserRole();
+
+
+
+                userRoleApp.Role = _context.Roles
+                    .Where(s => s.RoleDescription == "Applicant")
+                    .FirstOrDefault();
+
+                userRoleApp.User = user;
+
+                
+
+               // user.UserRoles.Add(item: userRoleApp);
+
                 _context.Add(user);
+                _context.Add(userRoleApp);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -170,5 +186,51 @@ namespace WildcatMicroFund.Controllers
         {
             return _context.Users.Any(e => e.ID == id);
         }
+
+
+
+        [HttpPost]
+        public FileResult Export()
+        {
+            var wildcatMicroFundDatabaseContext = _context.Users.Include(u => u.Ethnicity).Include(u => u.Gender).Include(u => u.UserBusinesses).ThenInclude(ub => ub.Business)
+                .Include(u => u.UserRoles).ThenInclude(ur => ur.Role)
+               ;
+
+
+            List<User> Users = wildcatMicroFundDatabaseContext.ToList();
+
+            
+
+
+            //Insert the Column Names.
+        
+
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("First Name, Last Name, Ethicity, Gender, City, Email, ");
+            sb.Append("\r\n");
+
+            for (int i = 0; i < Users.Count; i++)
+            {
+                
+                    //Append data with separator.
+                    sb.Append(Users[i].FirstName + ',');
+                sb.Append(Users[i].LastName + ',');
+                sb.Append(Users[i].Ethnicity.EthnicityDescription + ',');
+                sb.Append(Users[i].Gender.Description + ',');
+                sb.Append(Users[i].City + ',');
+                sb.Append(Users[i].Email + ',');
+
+
+                //Append new line character.
+                sb.Append("\r\n");
+
+            }
+
+            return File(Encoding.UTF8.GetBytes(sb.ToString()), "text/csv", "Grid.csv");
+        }
     }
+
+
+
 }
