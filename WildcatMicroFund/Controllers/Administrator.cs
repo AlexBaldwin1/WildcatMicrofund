@@ -19,14 +19,13 @@ namespace WildcatMicroFund.Controllers
             _context = context;
         }
 
-        /*        public IActionResult Index()
-                {
-                    return View();
-                }*/
 
         public async Task<IActionResult> Index()
         {
-            //return new Task(Task.Run(a => new View());
+/*            var wildcatMicroFundDatabaseContext = _context.Users.Include(u => u.Ethnicity).Include(u => u.Gender).Include(u => u.UserBusinesses).ThenInclude(ub => ub.Business)
+                .Include(u => u.UserRoles).ThenInclude(ur => ur.Role)
+               ;
+            return View(await wildcatMicroFundDatabaseContext.ToListAsync());*/
             return View();
         }
 
@@ -34,27 +33,120 @@ namespace WildcatMicroFund.Controllers
         public async Task<IActionResult> Users()
         {
 
+            //var wildcatMicroFundDatabaseContext = _context.Users.Include(u => u.Ethnicity).Include(u => u.Gender).Include(u => u.UserBusinesses).ThenInclude(ub => ub.Business)
+            //.Include(u => u.UserRoles).ThenInclude(ur => ur.Role);
+
             /*            if (id == null)
                         {
                             return NotFound();
                         }*/
 
 
-            var user = _context.Users;
-                //.Include(u => u.UserRoles);
+            //var user = _context.Users;
+            //.Include(u => u.UserRoles);
 
-/*            if (user == null)
-            {
-                return NotFound();
-            }*/
+            /*            if (user == null)
+                        {
+                            return NotFound();
+                        }*/
 
-            return View(user);
+            // return View(user);
+
+            var wildcatMicroFundDatabaseContext = _context.Users.Include(u => u.Ethnicity).Include(u => u.Gender).Include(u => u.UserBusinesses).ThenInclude(ub => ub.Business)
+            .Include(u => u.UserRoles).ThenInclude(ur => ur.Role)
+            ;
+            return View(await wildcatMicroFundDatabaseContext.ToListAsync());
 
         }
 
-        public async Task<IActionResult> Assign()
+        public async Task<IActionResult> Reports()
         {
             return View();
         }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            ViewData["EthnicityID"] = new SelectList(_context.Ethnicities, "ID", "EthnicityDescription", user.EthnicityID);
+            ViewData["GenderID"] = new SelectList(_context.Genders, "ID", "Description", user.GenderID);
+            return View(user);
+        }
+
+        private bool UserExists(int id)
+        {
+            return _context.Users.Any(e => e.ID == id);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Email,FirstName,LastName,PhoneNumber,GenderID,EthnicityID,StreetAddress,City,State,Zip")] User user)
+        {
+            if (id != user.ID)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(user);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!UserExists(user.ID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Users));
+            }
+            ViewData["EthnicityID"] = new SelectList(_context.Ethnicities, "ID", "EthnicityDescription", user.EthnicityID);
+            ViewData["GenderID"] = new SelectList(_context.Genders, "ID", "Description", user.GenderID);
+            return View(user);
+        }
+
+        public async Task<IActionResult> Assign(int? id)
+        {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var userRole = await _context.UserRoles.FindAsync(id);
+            if (userRole == null)
+            {
+                return NotFound();
+            }
+            ViewData["RoleID"] = new SelectList(_context.Roles, "ID", "ID");
+            ViewData["UserID"] = new SelectList(_context.Users, "ID", "Email");
+            return View(userRole);
+        }
+
+        public async Task<IActionResult> ApplicationStatus()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> NewApplication()
+        {
+            return View();
+        }
+
     }
 }

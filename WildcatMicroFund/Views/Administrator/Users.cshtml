@@ -1,182 +1,191 @@
 ﻿
-    @{
-        ViewData["Title"] = "Users";
-        Layout = "~/Views/Administrator/_layout.cshtml";
-    }
-    @model IEnumerable<WildcatMicroFund.Data.Models.User>
+@{
+    ViewData["Title"] = "Users";
+    Layout = "~/Views/Administrator/_layout.cshtml";
+}
+@model IEnumerable<WildcatMicroFund.Data.Models.User>
 
-    <p>Here is a list of all the users</p>
+<p>Here is a list of all the users</p>
 
-    <html>
-    <head>
-        <style>
-            table {
-                font-family: Arial, sans-serif;
-                border-collapse: collapse;
-                width: 100%;
-            }
+<html>
+<head>
+    <style>
+        table {
+            font-family: Arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
 
-            td, th {
-                border: 1px solid #dddddd;
-                text-align: left;
-                padding: 8px;
-            }
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
 
-            tr:nth-child(even) {
-                background-color: #dddddd;
-            }
-        </style>
-    </head>
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
 
-    <body>
-        <h2>User Lookup</h2>
+<body>
+    <h2>User Lookup</h2>
 
-        <table>
-            <tr>
-@*                <th>@Html.DisplayNameFor(model => model.FirstName)</th>
-                <th>@Html.DisplayNameFor(model => model.UserRoles)</th>
-                <th>@Html.DisplayNameFor(model => model.Email)</th>*@
-                <th>First Name</th>
-                <th>User Role</th>
-                <th>User Email</th>
-                <th>Assign User Role</th>
-            </tr>
-            <tbody>
-    @foreach (var item in Model) {
+    <table>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserRoles)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                <a asp-controller="Administrator" asp-action="Assign">Assign User Role</a>
-            </td>
+            <th>First Name</th>
+            <th>User Role</th>
+            <th>User Email</th>
+            <th>Assign</th>
+            <th>Edit</th>
         </tr>
-    }
-            </tbody>
-        </table>
-    </body>
-    </html>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                @foreach (var role in item.UserRoles)
+                {
+
+                    <td>
+                        @role.Role.RoleDescription.
+                    </td>
+                }
+@*                <td>
+                    @Html.DisplayFor(modelItem => item.UserRoles.ElementAt(0).Role.RoleDescription)
+                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    <a asp-action="Assign" asp-route-id="@item.ID">Assign</a>
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
 
 
 @*@model IEnumerable<WildcatMicroFund.Data.Models.User>
 
 
-<!DOCTYPE html>
+    <!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Email)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LastName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PhoneNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Gender)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Ethnicity)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.StreetAddress)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.City)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.State)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Zip)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.UserBusinesses)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.UserRoles)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Index</title>
+    </head>
+    <body>
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FirstName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LastName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PhoneNumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Gender.Description)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Ethnicity.EthnicityDescription)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StreetAddress)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.City)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.State)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Zip)
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LastName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PhoneNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Gender)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Ethnicity)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.StreetAddress)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.City)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.State)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Zip)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UserBusinesses)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UserRoles)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Gender.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ethnicity.EthnicityDescription)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StreetAddress)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.City)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.State)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Zip)
+                        </td>
 
-                    @foreach (var role in item.UserRoles)
-                    {
-                        int i = 0;
+                        @foreach (var role in item.UserRoles)
+                        {
+                            int i = 0;
+
+                            <td>
+                                @role.Role.RoleDescription
+                            </td>
+                            i++;
+                        }
 
                         <td>
-                            @role.Role.RoleDescription
+                            @Html.DisplayFor(modelItem => item.UserRoles.ElementAt(0).Role.RoleDescription)
                         </td>
-                        i++;
-                    }
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UserRoles.ElementAt(0).Role.RoleDescription)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</body>
-</html>*@
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </body>
+    </html>*@
 
