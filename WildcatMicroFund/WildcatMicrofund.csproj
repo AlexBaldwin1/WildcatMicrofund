@@ -29,6 +29,7 @@
     <Folder Include="Migrations\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Views\GenderPOC\" />
+    <Folder Include="Views\ReportsCSV\" />
   </ItemGroup>
 
 
