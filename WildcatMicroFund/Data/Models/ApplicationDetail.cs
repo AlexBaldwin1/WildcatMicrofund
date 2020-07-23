@@ -20,7 +20,7 @@ namespace WildcatMicroFund.Data.Models
         public int ApplicationID { get; set; }
         public Application Application { get; set; }
 
-        // Date that is set to when the application was created or updated.
+        // Date that is set to when the applicationDetails was created or updated
         public DateTime DateChanged { get; set; }
 
         [DisplayName("The name of your concept.")]
