@@ -1,9 +1,11 @@
-﻿@{
-    ViewData["Title"] = "Assign Role";
+﻿@{ ViewData["Title"] = "Assign Role";
     Layout = "~/Views/Administrator/_layout.cshtml";
 }
 
+@*@model List<WildcatMicroFund.Data.Models.UserRole>*@
 @model WildcatMicroFund.Data.Models.UserRole
+
+@using System.Linq
 
 
 <!DOCTYPE html>
@@ -11,38 +13,45 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Create</title>
+    <title>Assign User Role</title>
 </head>
 <body>
 
-    <h4>UserRole</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="UserID" class="control-label"></label>
-                    <select asp-for="UserID" class="form-control" asp-items="ViewBag.UserID"></select>
-                </div>
-                <div class="form-group">
-                    <label asp-for="RoleID" class="control-label"></label>
-                    <select asp-for="RoleID" class="form-control" asp-items="ViewBag.RoleID"></select>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                </div>
-            </form>
-        </div>
-    </div>
-
     <div>
-        <a asp-action="Index">Back to List</a>
+        <h4>UserRole</h4>
+        <hr />
+        <dl class="row">
+            @*            @{var roleList = Model.Select(a => a.Role.RoleDescription);}*@
+            <dt class="col-sm-2">
+                User Name:
+            </dt>
+            <dd class="col-sm-10">
+                @*              @Html.DisplayNameFor(a => a.User.FirstName)*@
+                @Html.DisplayFor(a => a.User.FirstName)
+                @*              @Html.DisplayNameFor(a => a.User.LastName)*@
+                @Html.DisplayFor(a => a.User.LastName)
+            </dd>
+            <dt class="col-sm-2">
+                User Roles:
+            </dt>
+            <dd class="col-sm-10">
+                @*              @Html.DisplayNameFor(a => a.Role.RoleDescription)*@
+                @Html.DisplayFor(a => a.Role.RoleDescription)
+            </dd>
+        </dl>
+        <a asp-action="Users">Back to Users</a>
     </div>
-
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <select asp-for="Role" class="form-control" asp-items="ViewBag.RoleID"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Assign" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
 </body>
 </html>
 

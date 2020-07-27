@@ -120,7 +120,7 @@ namespace WildcatMicroFund.Controllers
             return View(user);
         }
 
-        public async Task<IActionResult> Assign(int? id)
+/*        public async Task<IActionResult> Assign(int? id)
         {
 
             if (id == null)
@@ -136,6 +136,51 @@ namespace WildcatMicroFund.Controllers
             ViewData["RoleID"] = new SelectList(_context.Roles, "ID", "ID");
             ViewData["UserID"] = new SelectList(_context.Users, "ID", "Email");
             return View(userRole);
+        }*/
+
+        public async Task<IActionResult> Assign(int? id)
+        {
+            /*            List<string> roles = new List<string>();
+                        roles.Add("Admin");
+                        roles.Add("Applicant");*/
+            /*            ViewData["RoleID"] = new SelectList(_context.Roles.Select(a => a.ID));*/
+            /*            ViewData["RoleID"] = roles;*/
+
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var userRole = await _context.UserRoles
+                    .Include(u => u.Role)
+                    .Include(u => u.User)
+                    .FirstOrDefaultAsync(m => m.UserID == id);
+                if (userRole == null)
+                {
+                    return NotFound();
+                }
+/*                ViewData["Roles"] = new SelectList(_context.UserRoles, "RoleDescription", userRole.Role);*/
+                ViewData["RoleID"] = new SelectList(_context.Roles, "ID", "RoleDescription");
+                ViewData["UserID"] = new SelectList(_context.Users, "ID", "Email");
+                return View(userRole);
+            }
+
+            /*            if (id == null)
+                        {
+                            return NotFound();
+                        }
+
+                        var userRole = _context.UserRoles
+                            .Include(u => u.Role)
+                            .Include(u => u.User)
+                            .Where(m => m.UserID == id);
+                        if (userRole == null || !userRole.Any())
+                        {
+                            return NotFound();
+                        }
+
+                        return View(userRole.ToList());*/
         }
 
         public async Task<IActionResult> ApplicationStatus()
