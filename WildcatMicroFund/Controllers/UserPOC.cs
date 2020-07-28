@@ -23,7 +23,10 @@ namespace WildcatMicroFund.Controllers
         // GET: UserPOC
         public async Task<IActionResult> Index()
         {
-            var wildcatMicroFundDatabaseContext = _context.Users.Include(u => u.Ethnicity).Include(u => u.Gender).Include(u => u.UserBusinesses).ThenInclude(ub => ub.Business)
+            var wildcatMicroFundDatabaseContext = _context.Users
+                .Include(u => u.Ethnicity)
+                .Include(u => u.Gender)
+                .Include(u => u.UserBusinesses).ThenInclude(ub => ub.Business)
                 .Include(u => u.UserRoles).ThenInclude(ur => ur.Role)
                ;
             return View(await wildcatMicroFundDatabaseContext.ToListAsync());
