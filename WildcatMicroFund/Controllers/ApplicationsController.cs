@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore.Storage;
 using WildcatMicroFund.Data.Context;
 using WildcatMicroFund.Data.Models;
 
@@ -22,6 +25,10 @@ namespace WildcatMicroFund.Views
         // GET: Applications
         public async Task<IActionResult> Index()
         {
+            /*IEnumerable<ApplicationDetail> applicationDetails = 
+                from ApplicationDetail in _context.ApplicationDetails
+                where ApplicationDetail.ApplicationID ==  */
+
             var wildcatMicroFundDatabaseContext = _context.ApplicationDetails.Include(i => i.BusinessStage).Include(i => i.BusinessType).Include(i => i.ConceptStatus);
             return View(await wildcatMicroFundDatabaseContext.ToListAsync());
         }
@@ -142,7 +149,7 @@ namespace WildcatMicroFund.Views
                     applicationDetail.Application = oldApplicationDetails.Application;
                     applicationDetail.ApplicationID = oldApplicationDetails.ApplicationID;
                     applicationDetail.DateChanged = DateTime.Now;
-                    _context.ApplicationDetails.Add(applicationDetail);
+                    _context.ApplicationDetails.Update(applicationDetail);
                     
                     await _context.SaveChangesAsync();
                 }
