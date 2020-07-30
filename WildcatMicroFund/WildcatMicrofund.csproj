@@ -12,6 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="web.config" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -29,6 +33,11 @@
     <Folder Include="Migrations\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Views\GenderPOC\" />
+    <Folder Include="Views\ReportsCSV\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="web.config" />
   </ItemGroup>
 
 

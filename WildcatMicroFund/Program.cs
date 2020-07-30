@@ -10,6 +10,7 @@ using WildcatMicroFund.Data.Context;
 using WildcatMicroFund.Data;
 
 using Microsoft.Extensions.DependencyInjection;
+using System.IO;
 
 namespace WildcatMicroFund
 {
@@ -19,7 +20,9 @@ namespace WildcatMicroFund
         {
             //CreateHostBuilder(args).Build().Run();
 
-            var host = CreateHostBuilder(args).Build();
+            var host = CreateHostBuilder(args)
+                //.UseContentRoot(Directory.GetCurrentDirectory())
+                .Build();
             CreateDbIfNotExists(host);
             host.Run();
         }
@@ -48,6 +51,7 @@ namespace WildcatMicroFund
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    //webBuilder.UseIISIntegration();
                     webBuilder.UseStartup<Startup>();
                 });
     }
