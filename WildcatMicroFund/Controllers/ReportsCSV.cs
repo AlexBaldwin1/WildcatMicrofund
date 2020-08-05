@@ -96,7 +96,7 @@ namespace WildcatMicroFund.Controllers
 
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("ID, First Name, Last Name, Ethicity, Gender, Costs, Marketing, Idea Description ");
+            sb.Append("ID, First Name, Last Name, Ethicity, Gender, Business Name ,Idea Description , Costs, Marketing, Concept, Sales Generated,IntellectualProperty, ");
             sb.Append("\r\n");
 
             for (int i = 0; i < Applications.Count; i++)
@@ -124,12 +124,42 @@ namespace WildcatMicroFund.Controllers
 
                 }
 
+                if (Applications[i].Business != null)
+                {
+                    sb.Append(Applications[i].Business.BusinessName + ',');
+                }
+                else
+                {
+                    sb.Append("null ,");
+                }
+
+
+             
+
                 ApplicationDetail lastAppDetail = Applications[i].ApplicationDetails.Last();
 
-                
+                sb.Append(lastAppDetail.BusinessIdeaDescription + ',');
                 sb.Append(lastAppDetail.BusinessCosts + ',');
                 sb.Append(lastAppDetail.MarketingAndSales + ',');
-                sb.Append(lastAppDetail.BusinessIdeaDescription + ',');
+                sb.Append(lastAppDetail.Concept + ',');
+
+                if (lastAppDetail.SalesGenerated)
+                {
+                    sb.Append("Yes,");
+                }
+                else
+                {
+                    sb.Append("No,");
+                }
+
+                if (lastAppDetail.HasPrototypeOrIntellectualProperty)
+                {
+                    sb.Append("Yes,");
+                }
+                else
+                {
+                    sb.Append("No,");
+                }
 
 
                 //Append new line character.
