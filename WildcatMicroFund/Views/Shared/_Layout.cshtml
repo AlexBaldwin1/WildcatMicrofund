@@ -11,13 +11,15 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="UserControllerProofOfConcenpt" asp-action="Index">WildcatMicroFund</a>
+                <a class="navbar-brand" asp-area="" asp-controller="UserControllerProofOfConcenpt" asp-action="Index">
+                    <img src="~/Images/WildcatMicrofund_horizontal-01.jpg"
+                         style="width:175px;height:50px;">
+                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="UserPOC" asp-action="Index">User</a>
@@ -26,7 +28,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="BusinessPOC" asp-action="Index">Business</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ReportsCSV" asp-action="Index">Applications</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="ApplicationPOC" asp-action="Index">Applications</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="GenderPoc" asp-action="Index">Gender</a>
@@ -35,13 +37,13 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="UserRolesPOC" asp-action="Index">UserRoles</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="SurveyPOC" asp-action="Index">Survey</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Administrator" asp-action="Index">Administrator</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Applicant" asp-action="Index">Applicant</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Applications" asp-action="Index">Applications</a>
                         </li>
                     </ul>
                 </div>
