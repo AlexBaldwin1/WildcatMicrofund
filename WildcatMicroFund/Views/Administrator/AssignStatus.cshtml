@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewData["Title"] = "Status";
+    Layout = "~/Views/Administrator/_layout.cshtml";
+}
+
+@model IEnumerable<WildcatMicroFund.Data.Models.User>
+
+<p>
+    Change Status of application here?
+    Should this be shared with different dashboards
+</p>
+
+
+<html>
+<style>
+    table {
+        font-family: Arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+<body>
+
+    <label for="status">Search: </label>
+    <select name="status" id="status">
+        <option value="Application Complete">Application Complete </option>
+    </select>
+    <button type="submit">Go</button>
+    <br />
+    <h2> This is the list of available applications </h2>
+    <br />
+
+    <table>
+
+        <tr>
+            <th>Application ID</th>
+            <th>Name</th>
+            <th>Business</th>
+            <th>Status</th>
+        </tr>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserRoles)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Applications)
+                </td>
+                <td>
+                    <a asp-controller="Administrator" asp-action="Assign">Assign User Role</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+
+    </table>
+
+    <label for="applicationID">Application ID</label>
+    <input type="text" id="applicationID" name="applicationID" /><br />
+
+    <label for="changeStatus">Change Status</label>
+    <select name="changeStatus" id="changeStatus">
+        <option value="Application in Review">Application in Review</option>
+    </select>
+    <br />
+    <br />
+    
+    <button type="submit">Set Status</button>
+
+</body>
+
+</html>

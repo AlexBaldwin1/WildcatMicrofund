@@ -1,6 +1,59 @@
 ﻿@{
-    ViewData["Title"] = "Reports";
+    ViewData["Title"] = "Applcation Status";
     Layout = "~/Views/Administrator/_layout.cshtml";
 }
 
-<p1>Application Status</p1>
+ @model IEnumerable<WildcatMicroFund.Data.Models.Application>
+
+
+@using System.Linq
+
+<html>
+<body>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+    <h4>Application Status: Show a list of applications and the Statuses</h4>
+    <table>
+        <tr>
+
+            <th>Name</th>
+            <th>Business</th>
+            <th>Status</th>
+        </tr>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Business)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ApplicationStatus)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+    <label for="applicationID">Application ID</label>
+    <input type="text" id="applicationID" name="applicationID" /><br />
+
+    <label for="changeStatus">Change Status</label>
+    <select name="changeStatus" id="changeStatus">
+        <option value="Application in Review">Application in Review</option>
+    </select>
+    <br />
+    <br />
+
+    <button type="submit">Set Status</button>
+
+</body>
+</html>
+

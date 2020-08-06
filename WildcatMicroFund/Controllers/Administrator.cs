@@ -183,12 +183,28 @@ namespace WildcatMicroFund.Controllers
                         return View(userRole.ToList());*/
         }
 
-        public async Task<IActionResult> ApplicationStatus()
+        public async Task<IActionResult> ApplicationStatus(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var application = await _context.Applications
+                .Include(u => u.Business)
+                .Include(u => u.ApplicationStatus)
+                .FirstOrDefaultAsync(m => m.UserID == id);
+            if (application == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["ApplicationStatus"] = new SelectList(_context.Applications, "ID", "ApplicationStatus");
+
+            return View(application);
+            //return View();
         }
 
-        public async Task<IActionResult> NewApplication()
+        public async Task<IActionResult> NewApplication() 
         {
             return View();
         }
