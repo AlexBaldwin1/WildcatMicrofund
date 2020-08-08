@@ -23,15 +23,11 @@
             td, th {
                 border: 1px solid #dddddd;
                 text-align: left;
-                padding: 8px;
+                padding: 10px;
             }
 
-            tr:nth-child(even) {
-                background-color: #dddddd;
-            }
         </style>
-    
-    <title>Application Status List</title>
+   
 </head>
 
 <body>
@@ -50,15 +46,15 @@
             {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.UserID)
+                    @Html.DisplayFor(modelItem => item.User.FirstName)
+                </td>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.Business.BusinessName)
                 </td>
 
                 <td>
-                    @Html.DisplayFor(modelItem =>item.BusinessID)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(ModelItem=>item.ApplicationStatus)
+                    @Html.DisplayFor(ModelItem => item.ApplicationStatus.Description)
                 </td>
 
                 <td>
