@@ -183,12 +183,106 @@ namespace WildcatMicroFund.Controllers
                         return View(userRole.ToList());*/
         }
 
-        public async Task<IActionResult> ApplicationStatus()
+        public async Task<IActionResult> ApplicationStatus() 
         {
-            return View();
+           /* var wildcatMicroFundDatabaseContext = _context.Users.Include(u => u.Ethnicity).Include(u => u.Gender).Include(u => u.UserBusinesses).ThenInclude(ub => ub.Business)
+            .Include(u => u.UserRoles).ThenInclude(ur => ur.Role)
+            ;*/
+
+            var wildcatMicroFundDatabaseContext2 = _context.Applications.Include(u => u.User).Include(u => u.Business).Include(u => u.ApplicationStatus)
+                
+                ;
+
+            return View(await wildcatMicroFundDatabaseContext2.ToListAsync());
+            //return View();
         }
 
-        public async Task<IActionResult> NewApplication()
+        public async Task<IActionResult> ChangeStatus(int? id)
+        {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var application = await _context.Applications.FindAsync(id);
+            if (application == null)
+            {
+                return NotFound();
+            }
+            ViewData["ApplicationStatusID"] = new SelectList(_context.ApplicationStatuses, "ID", "Description", application.ApplicationStatusID);
+            return View(application);
+           /* var status = await _context.Applications
+                    .Include(u => u.ApplicationStatus)
+                    .Include(u => u.User)
+                    .FirstOrDefaultAsync(m => m.ID == id);
+            if (status == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["ApplicationStatusID"] = new SelectList(_context.Applications, "ID", "ApplicationStatus");
+            return View(status);*/
+        }
+
+        private bool ApplicationExists(int id)
+        {
+            return _context.Applications.Any(e => e.ID == id);
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeStatus(int id, [Bind("ID ,Business, BusinessID,UserID, User,DateApplied,AttendedWorkshop, DateofDecision, ApplicationDetails, ApplicationStatusID, ApplicationStatus")] Application application)
+ 
+        {
+
+            {
+                if (id != application.ID)
+                {
+                    return NotFound();
+                }
+
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        _context.Update(application);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!ApplicationExists(application.ID))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction(nameof(ApplicationStatus));
+                }
+
+                ViewData["ApplicationStatusID"] = new SelectList(_context.ApplicationStatuses, "ID", "Description", application.ApplicationStatusID);
+                return View(application);
+                /*
+                var status = await _context.Applications
+                    .Include(u => u.ApplicationStatus)
+                    .Include(u => u.User)
+                    .FirstOrDefaultAsync(m => m.ID == id);
+                if (status == null)
+                {
+                    return NotFound();
+                }
+
+                ViewData["Description"] = new SelectList(_context.ApplicationStatuses, "ID", "Description");
+                return View(status);*/
+            }
+        }
+
+            public async Task<IActionResult> NewApplication()
         {
             return View();
         }
