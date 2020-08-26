@@ -1,0 +1,106 @@
+﻿@model WildcatMicroFund.Data.Models.ApplicationDetail
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h4>Update Application for @Html.DisplayTextFor(m => m.Concept)</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12" style="text-align:center">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group row">
+                <label asp-for="Concept" class="control-label col-sm-6"></label>
+                <input asp-for="Concept" class="form-control col-sm-6" />
+                <span asp-validation-for="Concept" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="ConceptStatusID" class="control-label col-sm-6"></label>
+                <select asp-for="ConceptStatusID" class="form-control col-sm-6" asp-items="ViewBag.ConceptStatusID"></select>
+                <span asp-validation-for="ConceptStatusID" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="SalesGenerated" class="col-sm-6 control-label"></label>
+                <input asp-for="SalesGenerated" class="col-sm-6 form-control" vale />
+                <span asp-validation-for="SalesGenerated" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="SalesGeneratedInformation" class="control-label col-sm-6"></label>
+                <textarea asp-for="SalesGeneratedInformation" class="form-control col-sm-6"></textarea>
+                <span asp-validation-for="SalesGeneratedInformation" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="BusinessStageID" class="control-label col-sm-6"></label>
+                <select asp-for="BusinessStageID" class="form-control col-sm-6" asp-items="ViewBag.BusinessStageID"></select>
+                <span asp-validation-for="BusinessStageID" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="BusinessIdeaDescription" class="control-label col-sm-6"></label>
+                <textarea asp-for="BusinessIdeaDescription" class="form-control col-sm-6"></textarea>
+                <span asp-validation-for="BusinessIdeaDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="HasPrototypeOrIntellectualProperty" class="control-label col-sm-6"></label>
+                <input asp-for="HasPrototypeOrIntellectualProperty" class="form-control col-sm-6" />
+                <span asp-validation-for="HasPrototypeOrIntellectualProperty" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="PrototypeDescription" class="control-label col-sm-6"></label>
+                <textarea asp-for="PrototypeDescription" class="form-control col-sm-6"></textarea>
+                <span asp-validation-for="PrototypeDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="BusinessTypeID" class="control-label col-sm-6"></label>
+                <select asp-for="BusinessTypeID" class="form-control col-sm-6" asp-items="ViewBag.BusinessTypeID"></select>
+                <span asp-validation-for="BusinessTypeID" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="MarketOpportunity" class="control-label col-sm-6"></label>
+                <textarea asp-for="MarketOpportunity" class="form-control col-sm-6"></textarea>
+                <span asp-validation-for="MarketOpportunity" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="EvidenceOfViableOpportunity" class="control-label col-sm-6"></label>
+                <textarea asp-for="EvidenceOfViableOpportunity" class="form-control col-sm-6"></textarea>
+                <span asp-validation-for="EvidenceOfViableOpportunity" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="CustomerDescription" class="control-label col-sm-6"></label>
+                <textarea asp-for="CustomerDescription" class="form-control col-sm-6"></textarea>
+                <span asp-validation-for="CustomerDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="MarketingAndSales" class="control-label col-sm-6"></label>
+                <textarea asp-for="MarketingAndSales" class="form-control col-sm-6"></textarea>
+                <span asp-validation-for="MarketingAndSales" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="BusinessCosts" class="control-label col-sm-6"></label>
+                <textarea asp-for="BusinessCosts" class="form-control col-sm-6"></textarea>
+                <span asp-validation-for="BusinessCosts" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="CompetitionDescription" class="control-label col-sm-6"></label>
+                <textarea asp-for="CompetitionDescription" class="form-control col-sm-6"></textarea>
+                <span asp-validation-for="CompetitionDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="TeamDescription" class="control-label col-sm-6"></label>
+                <textarea asp-for="TeamDescription" class="form-control col-sm-6"></textarea>
+                <span asp-validation-for="TeamDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="SpecificRequest" class="control-label col-sm-6"></label>
+                <textarea asp-for="SpecificRequest" class="form-control col-sm-6"></textarea>
+                <span asp-validation-for="SpecificRequest" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a asp-action="Index" class="btn btn-primary">Cancel</a>
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+

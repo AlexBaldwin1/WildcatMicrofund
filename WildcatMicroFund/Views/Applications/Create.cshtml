@@ -1,0 +1,105 @@
+﻿@model WildcatMicroFund.Data.Models.ApplicationDetail
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Applications/_Layout.cshtml";
+}
+
+
+
+<h1>Create New Application</h1>
+<hr />
+<div class="row">
+    <div class="col-md-12" style="text-align:center">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group row">
+                <label asp-for="Concept" class="col-sm-6 control-label"></label>
+                <input asp-for="Concept" class="col-sm-6 form-control" />
+                <span asp-validation-for="Concept" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="ConceptStatusID" class="col-sm-6 control-label"></label>
+                <select asp-for="ConceptStatusID" class="col-sm-6 form-control" asp-items="ViewBag.ConceptStatusID"></select>
+            </div>
+            <div class="form-group row">
+                <label asp-for="SalesGenerated" class="col-sm-6 control-label"></label>
+                <input asp-for="SalesGenerated" class="col-sm-6 form-control" vale />
+                <span asp-validation-for="SalesGenerated" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="SalesGeneratedInformation" class="col-sm-6 control-label"></label>
+                <textarea asp-for="SalesGeneratedInformation" class="col-sm-6 form-control"></textarea>
+                <span asp-validation-for="SalesGeneratedInformation" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="BusinessStageID" class="col-sm-6 control-label"></label>
+                <select asp-for="BusinessStageID" class="col-sm-6 form-control" asp-items="ViewBag.BusinessStageID"></select>
+            </div>
+            <div class="form-group row">
+                <label asp-for="BusinessIdeaDescription" class="col-sm-6 control-label"></label>
+                <textarea asp-for="BusinessIdeaDescription" class="col-sm-6 form-control"></textarea>
+                <span asp-validation-for="BusinessIdeaDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="HasPrototypeOrIntellectualProperty" class="col-sm-6 control-label"></label>
+                <input asp-for="HasPrototypeOrIntellectualProperty" class="col-sm-6 form-control" />
+                <span asp-validation-for="HasPrototypeOrIntellectualProperty" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="PrototypeDescription" class="col-sm-6 control-label"></label>
+                <textarea asp-for="PrototypeDescription" class="col-sm-6 form-control"></textarea>
+                <span asp-validation-for="PrototypeDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="BusinessTypeID" class="col-sm-6 control-label"></label>
+                <select asp-for="BusinessTypeID" class="col-sm-6 form-control" asp-items="ViewBag.BusinessTypeID"></select>
+            </div>
+            <div class="form-group row">
+                <label asp-for="MarketOpportunity" class="col-sm-6 control-label"></label>
+                <textarea asp-for="MarketOpportunity" class="col-sm-6 form-control"></textarea>
+                <span asp-validation-for="MarketOpportunity" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="EvidenceOfViableOpportunity" class="col-sm-6 control-label"></label>
+                <textarea asp-for="EvidenceOfViableOpportunity" class="col-sm-6 form-control"></textarea>
+                <span asp-validation-for="EvidenceOfViableOpportunity" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="CustomerDescription" class="col-sm-6 control-label"></label>
+                <textarea asp-for="CustomerDescription" class="col-sm-6 form-control"></textarea>
+                <span asp-validation-for="CustomerDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="MarketingAndSales" class="col-sm-6 control-label"></label>
+                <textarea asp-for="MarketingAndSales" class="col-sm-6 form-control"></textarea>
+                <span asp-validation-for="MarketingAndSales" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="BusinessCosts" class="col-sm-6 control-label"></label>
+                <textarea asp-for="BusinessCosts" class="col-sm-6 form-control"></textarea>
+                <span asp-validation-for="BusinessCosts" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="CompetitionDescription" class="col-sm-6 control-label"></label>
+                <textarea asp-for="CompetitionDescription" class="col-sm-6 form-control"></textarea>
+                <span asp-validation-for="CompetitionDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="TeamDescription" class="col-sm-6 control-label"></label>
+                <textarea asp-for="TeamDescription" class="col-sm-6 form-control"></textarea>
+                <span asp-validation-for="TeamDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="SpecificRequest" class="col-sm-6 control-label"></label>
+                <textarea asp-for="SpecificRequest" class="col-sm-6 form-control"></textarea>
+                <span asp-validation-for="SpecificRequest" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a asp-action="Index" class="btn btn-primary">Cancel</a>
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+

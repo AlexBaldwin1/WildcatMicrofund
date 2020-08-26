@@ -1,0 +1,16 @@
+﻿@page
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    @using (Html.BeginForm("ExportAllApplications", "ReportsCSV", FormMethod.Post))
+    {
+        <input type="submit" id="btnSubmit" value="Export All Applications" />
+    }
+</body>
+</html>
