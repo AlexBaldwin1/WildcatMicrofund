@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewData["Title"] = "Users";
+    Layout = "~/Views/Administrator/_layout.cshtml";
+}
+@model IEnumerable<WildcatMicroFund.Data.Models.User>
+@using System.Linq;
+
+<p>Here is a list of all the users</p>
+
+<html>
+<head>
+    <style>
+        table {
+            font-family: Arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>User Lookup</h2>
+
+    <table>
+        <tr>
+            <th>First Name</th>
+            <th>User Role</th>
+            <th>User Email</th>
+            <th>Assign</th>
+            <th>Edit</th>
+        </tr>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @string.Join(", ",  item.UserRoles.Select(a => a.Role.RoleDescription))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    <a asp-action="Assign" asp-route-id="@item.ID">Assign</a>
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
+

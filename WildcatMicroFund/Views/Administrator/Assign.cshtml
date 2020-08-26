@@ -1,0 +1,58 @@
+﻿@{ ViewData["Title"] = "Assign Role";
+    Layout = "~/Views/Administrator/_layout.cshtml";
+}
+
+@*@model List<WildcatMicroFund.Data.Models.UserRole>*@
+@model WildcatMicroFund.Data.Models.UserRole
+
+@using System.Linq
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Assign User Role</title>
+</head>
+<body>
+
+    <div>
+        <h4>UserRole</h4>
+        <hr />
+        <dl class="row">
+            @*            @{var roleList = Model.Select(a => a.Role.RoleDescription);}*@
+            <dt class="col-sm-2">
+                User Name:
+            </dt>
+            <dd class="col-sm-10">
+                @*              @Html.DisplayNameFor(a => a.User.FirstName)*@
+                @Html.DisplayFor(a => a.User.FirstName)
+                @*              @Html.DisplayNameFor(a => a.User.LastName)*@
+                @Html.DisplayFor(a => a.User.LastName)
+            </dd>
+            <dt class="col-sm-2">
+                User Roles:
+            </dt>
+            <dd class="col-sm-10">
+                @*              @Html.DisplayNameFor(a => a.Role.RoleDescription)*@
+                @Html.DisplayFor(a => a.Role.RoleDescription)
+            </dd>
+        </dl>
+        <a asp-action="Users">Back to Users</a>
+    </div>
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <select asp-for="Role" class="form-control" asp-items="ViewBag.RoleID"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Assign" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+
+

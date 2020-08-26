@@ -1,0 +1,107 @@
+﻿@model WildcatMicroFund.Data.Models.IdeaApplication
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>IdeaApplication</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Concept" class="control-label"></label>
+                <input asp-for="Concept" class="form-control" />
+                <span asp-validation-for="Concept" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConceptStatusID" class="control-label"></label>
+                <select asp-for="ConceptStatusID" class ="form-control" asp-items="ViewBag.ConceptStatusID"></select>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SalesGenerated" /> @Html.DisplayNameFor(model => model.SalesGenerated)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="SalesGeneratedInformation" class="control-label"></label>
+                <input asp-for="SalesGeneratedInformation" class="form-control" />
+                <span asp-validation-for="SalesGeneratedInformation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BusinessStageID" class="control-label"></label>
+                <select asp-for="BusinessStageID" class ="form-control" asp-items="ViewBag.BusinessStageID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="BusinessIdeaDescription" class="control-label"></label>
+                <input asp-for="BusinessIdeaDescription" class="form-control" />
+                <span asp-validation-for="BusinessIdeaDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HasPrototypeOrIntellectualProperty" class="control-label"></label>
+                <input asp-for="HasPrototypeOrIntellectualProperty" class="form-control" />
+                <span asp-validation-for="HasPrototypeOrIntellectualProperty" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PrototypeDescription" class="control-label"></label>
+                <input asp-for="PrototypeDescription" class="form-control" />
+                <span asp-validation-for="PrototypeDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BusinessTypeID" class="control-label"></label>
+                <select asp-for="BusinessTypeID" class ="form-control" asp-items="ViewBag.BusinessTypeID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="MarketOpportunity" class="control-label"></label>
+                <input asp-for="MarketOpportunity" class="form-control" />
+                <span asp-validation-for="MarketOpportunity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EvidenceOfViableOpportunity" class="control-label"></label>
+                <input asp-for="EvidenceOfViableOpportunity" class="form-control" />
+                <span asp-validation-for="EvidenceOfViableOpportunity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CustomerDescription" class="control-label"></label>
+                <input asp-for="CustomerDescription" class="form-control" />
+                <span asp-validation-for="CustomerDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MarketingAndSales" class="control-label"></label>
+                <input asp-for="MarketingAndSales" class="form-control" />
+                <span asp-validation-for="MarketingAndSales" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BusinessCosts" class="control-label"></label>
+                <input asp-for="BusinessCosts" class="form-control" />
+                <span asp-validation-for="BusinessCosts" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompetitionDescription" class="control-label"></label>
+                <input asp-for="CompetitionDescription" class="form-control" />
+                <span asp-validation-for="CompetitionDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TeamDescription" class="control-label"></label>
+                <input asp-for="TeamDescription" class="form-control" />
+                <span asp-validation-for="TeamDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SpecificRequest" class="control-label"></label>
+                <input asp-for="SpecificRequest" class="form-control" />
+                <span asp-validation-for="SpecificRequest" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
